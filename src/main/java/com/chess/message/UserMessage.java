@@ -1,12 +1,10 @@
 package com.chess.message;
 
-import com.chess.game.ChessBoard;
 import com.chess.game.GameStatus;
 import com.chess.game.PieceType;
 import com.chess.game.Position;
 
 import static com.chess.game.ChessBoard.*;
-import static com.chess.game.GameStatus.*;
 import static java.lang.Integer.*;
 
 public final class UserMessage {
@@ -15,11 +13,11 @@ public final class UserMessage {
     private Position targetPosition;        // 기물다음위치
     private final GameStatus gameStatus;    // 게임상태
 
-    public UserMessage(GameStatus gameStatus) {
+    private UserMessage(GameStatus gameStatus) {
         this.gameStatus = gameStatus;
     }
 
-    public UserMessage(PieceType pieceType, Position position, Position targetPosition, GameStatus gameStatus) {
+    private UserMessage(PieceType pieceType, Position position, Position targetPosition, GameStatus gameStatus) {
         this.pieceType = pieceType;
         this.position = position;
         this.targetPosition = targetPosition;
@@ -45,7 +43,7 @@ public final class UserMessage {
     }
 
     private static Position convertToPos(String prevPos) {
-        int x = MAX_RANKS - parseInt(prevPos.split("")[1]);
+        int x = MAX_NUM_OF_LINE - parseInt(prevPos.split("")[1]);
         int y = (prevPos.split("")[0].charAt(0))-'a';
         return Position.of(x, y);
     }

@@ -1,12 +1,15 @@
 package com.chess.ui;
 
+import java.util.Arrays;
+import java.util.List;
+
 public final class BoardPrinter {
-    void showChessBoard(String[][] board) {
+    void showChessBoard(List<List<String>> board) {
         System.out.println("  --------------------------------------");
-        for(int i=0; i<board.length; i++) {
+        for(int i=0; i<board.size(); i++) {
             System.out.print(8-i);
-            for(int j=0; j<board[i].length; j++) {
-                String value = board[i][j];
+            for(int j=0; j<board.get(i).size(); j++) {
+                String value = board.get(i).get(j);
                 System.out.print(" | " + getPieceChar(value));
             }
             System.out.print(" |" + "\n");
@@ -16,9 +19,9 @@ public final class BoardPrinter {
     }
 
     private char getPieceChar(String value) {
-        String[] arr = value.split(",");
-        String pieceType = arr[0];
-        String playerType = arr[1];
+        List<String> list = Arrays.asList(value.split(","));
+        String pieceType = list.get(0);
+        String playerType = list.get(1);
 
         if(playerType.equals("BLACK"))
             return PieceBlackChar.valueOf(pieceType).getValue();

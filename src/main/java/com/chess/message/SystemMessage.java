@@ -2,22 +2,23 @@ package com.chess.message;
 
 import com.chess.game.*;
 
-import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public final class SystemMessage {
-    private final String[][] board;
+    private final List<List<String>> board;
     private final String playerType;
     private final String gameStatus;
     private PieceType lastPieceType;
     private Position lastPosition;
 
-    public SystemMessage(String[][] board, String playerType, String gameStatus) {
+    private SystemMessage(List<List<String>> board, String playerType, String gameStatus) {
         this.board = board;
         this.playerType = playerType;
         this.gameStatus = gameStatus;
     }
 
-    public SystemMessage(String[][] board, String playerType, String gameStatus, PieceType lastPieceType, Position lastPosition) {
+    private SystemMessage(List<List<String>> board, String playerType, String gameStatus, PieceType lastPieceType, Position lastPosition) {
         this.board = board;
         this.playerType = playerType;
         this.gameStatus = gameStatus;
@@ -25,7 +26,7 @@ public final class SystemMessage {
         this.lastPosition = lastPosition;
     }
 
-    public String[][] getBoard() {
+    public List<List<String>> getBoard() {
         return board;
     }
 
@@ -49,12 +50,13 @@ public final class SystemMessage {
         return new SystemMessage(makeBoard(board.getBoard()), playerType.name(), gameStatus.name(), lastPieceType, lastPosition);
     }
 
-    private static String[][] makeBoard(Piece[][] board) {
-        String[][] strBoard = new String[board.length][board[0].length];
+    private static List<List<String>> makeBoard(List<List<Piece>> board) {
+        List<List<String>> strBoard = new LinkedList<>();
 
-        for(int i = 0; i< board.length; i++) {
-            for(int j = 0; j< board[0].length; j++) {
-                strBoard[i][j] = board[i][j].getPieceType() + "," + board[i][j].getPlayerType();
+        for(int i = 0; i< board.size(); i++) {
+            strBoard.add(new LinkedList<>());
+            for(int j = 0; j< board.get(0).size(); j++) {
+                strBoard.get(i).add((board.get(i).get(j).getPieceType() + "," + board.get(i).get(j).getPlayerType()));
             }
         }
 
@@ -64,7 +66,7 @@ public final class SystemMessage {
     @Override
     public String toString() {
         return "SystemMessage{" +
-                "board=" + Arrays.toString(board) +
+                "board=" + board +
                 ", playerType=" + playerType +
                 ", gameStatus=" + gameStatus +
                 ", lastPieceType=" + lastPieceType +

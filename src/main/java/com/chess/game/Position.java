@@ -27,11 +27,6 @@ public final class Position {
         return new Position(position.getX(), position.getY());
     }
 
-    public static boolean isRange(Position start, Position end, Position position) {
-        return (start.getX() <= position.getX() && position.getX() <= end.getX())
-            && (start.getY() <= position.getY() && position.getY() <= end.getY());
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
