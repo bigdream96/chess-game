@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.chess.game.PlayerType.WHITE;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("룩")
@@ -24,9 +25,9 @@ class RookTest {
         Pawn pawn = (Pawn)chessBoard.getPiece(Position.of(6, 7));
         Rook rook = (Rook)chessBoard.getPiece(Position.of(7, 7));
 
-        pawn.move(chessBoard, Position.of(6, 7), Position.of(4, 7));
-        rook.move(chessBoard, Position.of(7, 7), Position.of(5, 7));
-        rook.move(chessBoard, Position.of(5, 7), Position.of(5, 0));
+        pawn.move(chessBoard, WHITE, Position.of(6, 7), Position.of(4, 7));
+        rook.move(chessBoard, WHITE, Position.of(7, 7), Position.of(5, 7));
+        rook.move(chessBoard, WHITE, Position.of(5, 7), Position.of(5, 0));
 
         assertEquals(rook, chessBoard.getPiece(Position.of(5, 0)));
     }
@@ -37,16 +38,16 @@ class RookTest {
         Rook rook = (Rook)chessBoard.getPiece(Position.of(7, 7));
 
         // 보드판의 범위를 벗어났을 때
-        rook.move(chessBoard, Position.of(7, 7), Position.of(8, 8));
+        rook.move(chessBoard, WHITE, Position.of(7, 7), Position.of(8, 8));
 
         // 자기 자신의 기물이 목표위치일 때
-        rook.move(chessBoard, Position.of(7, 7), Position.of(7, 0));
+        rook.move(chessBoard, WHITE, Position.of(7, 7), Position.of(7, 0));
 
         // 룩 이동범위에 다른 기물이 있는 경우
-        rook.move(chessBoard, Position.of(7, 7), Position.of(5, 7));
+        rook.move(chessBoard, WHITE, Position.of(7, 7), Position.of(5, 7));
 
         // 동일 플레이어의 기물을 공격한 경우
-        rook.move(chessBoard, Position.of(7,7), Position.of(6, 7));
+        rook.move(chessBoard, WHITE, Position.of(7,7), Position.of(6, 7));
 
         assertEquals(rook, chessBoard.getPiece(Position.of(7, 7)));
     }

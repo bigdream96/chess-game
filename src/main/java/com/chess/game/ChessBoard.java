@@ -21,16 +21,6 @@ public final class ChessBoard {
     }
 
     /* 기물검색하기 */
-    Piece getPiece(PlayerType playerType, PieceType pieceType, Position position) {
-        Piece piece = getPiece(position);
-
-        if(playerType != piece.getPlayerType() || pieceType != piece.getPieceType())
-            return NonePiece.create();
-
-        return piece;
-    }
-
-    /* 기물검색하기 */
     Piece getPiece(Position position) {
         for(int i=0; i<board.size(); i++) {
             for(int j=0; j<board.get(i).size(); j++) {
@@ -178,8 +168,8 @@ public final class ChessBoard {
 
     /* 기물두기 */
     public synchronized GameResult put(PlayerType playerType, PieceType pieceType, Position position, Position targetPosition) {
-        Piece piece = getPiece(playerType, pieceType, position);
-        PieceStatus status = piece.move(this, position, targetPosition);
+        Piece piece = getPiece(position);
+        PieceStatus status = piece.move(this, playerType, position, targetPosition);
         return rule.judge(playerType, this, piece, status);
     }
 

@@ -15,26 +15,11 @@ final class Pawn extends AbstractPiece {
         initPosition = true;
     }
 
-    @Override
-    public PieceType getPieceType() {
-        return super.getPieceType();
-    }
-
-    @Override
-    public PlayerType getPlayerType() {
-        return super.getPlayerType();
-    }
-
     boolean isInitPosition() {
         return initPosition;
     }
 
     Position getPrevPosition() { return prevPosition; }
-
-    @Override
-    public PieceStatus move(ChessBoard board, Position position, Position targetPosition) {
-        return super.move(board, position, targetPosition);
-    }
 
     @Override
     boolean checkPieceRange(ChessBoard board, Position position, Position targetPosition) {
@@ -120,10 +105,5 @@ final class Pawn extends AbstractPiece {
         }
 
         return false;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 }

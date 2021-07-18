@@ -12,21 +12,6 @@ final class Queen extends AbstractPiece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return super.getPieceType();
-    }
-
-    @Override
-    public PlayerType getPlayerType() {
-        return super.getPlayerType();
-    }
-
-    @Override
-    public PieceStatus move(ChessBoard board, Position position, Position targetPosition) {
-        return super.move(board, position, targetPosition);
-    }
-
-    @Override
     boolean checkPieceRange(ChessBoard board, Position position, Position targetPosition) {
         if(position.getX() == targetPosition.getX() || position.getY() == targetPosition.getY())
             return checkVerticalPieces(board, position, targetPosition);
@@ -111,10 +96,5 @@ final class Queen extends AbstractPiece {
         }
 
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 }

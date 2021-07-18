@@ -13,23 +13,8 @@ final class Rook extends AbstractPiece {
         initPosition = true;
     }
 
-    @Override
-    public PieceType getPieceType() {
-        return super.getPieceType();
-    }
-
-    @Override
-    public PlayerType getPlayerType() {
-        return super.getPlayerType();
-    }
-
     boolean isInitPosition() {
         return initPosition;
-    }
-
-    @Override
-    public PieceStatus move(ChessBoard board, Position position, Position targetPosition) {
-        return super.move(board, position, targetPosition);
     }
 
     @Override
@@ -68,10 +53,5 @@ final class Rook extends AbstractPiece {
     @Override
     boolean isPossibleAttack(ChessBoard board, Position position, Position targetPosition) {
         return checkPieceRange(board, position, targetPosition);
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 }

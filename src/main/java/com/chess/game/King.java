@@ -15,23 +15,8 @@ final class King extends AbstractPiece {
         initPosition = true;
     }
 
-    @Override
-    public PieceType getPieceType() {
-        return super.getPieceType();
-    }
-
-    @Override
-    public PlayerType getPlayerType() {
-        return super.getPlayerType();
-    }
-
     boolean isInitPosition() {
         return initPosition;
-    }
-
-    @Override
-    public PieceStatus move(ChessBoard board, Position position, Position targetPosition) {
-        return super.move(board, position, targetPosition);
     }
 
     @Override
@@ -122,7 +107,7 @@ final class King extends AbstractPiece {
 
         for(AbstractPiece enemyPiece : enemyPieces) {
             for (Position possiblePosition : possiblePositions.keySet()) {
-                if (enemyPiece.validate(board, board.getPosition(enemyPiece), possiblePosition)) {
+                if (enemyPiece.validate(board, enemyPlayerType, board.getPosition(enemyPiece), possiblePosition)) {
                     possiblePositions.put(possiblePosition, true);
                     attackEnemyPieces.put(enemyPiece, false);
                 }
@@ -131,7 +116,7 @@ final class King extends AbstractPiece {
 
         for(AbstractPiece piece : pieces) {
             for (AbstractPiece enemyPiece : attackEnemyPieces.keySet()) {
-                if (piece.validate(board, board.getPosition(piece), board.getPosition(enemyPiece))) {
+                if (piece.validate(board, getPlayerType(), board.getPosition(piece), board.getPosition(enemyPiece))) {
                     attackEnemyPieces.put(enemyPiece, true);
                 }
             }
@@ -145,10 +130,5 @@ final class King extends AbstractPiece {
     /* 해당 킹이 스테일메이트인지 확인 */
     boolean isStalemate(ChessBoard board) {
         return !isCheck(board) && isCheckmate(board);
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 }

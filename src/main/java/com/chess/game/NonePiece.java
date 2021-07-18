@@ -15,7 +15,7 @@ final class NonePiece implements Piece {
     public static NonePiece create() { return new NonePiece(); }
 
     @Override
-    public PieceStatus move(ChessBoard board, Position position, Position targetPosition) {
+    public PieceStatus move(ChessBoard board, PlayerType playerType, Position position, Position targetPosition) {
         return INVALID_MOVE;
     }
 

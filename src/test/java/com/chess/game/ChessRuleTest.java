@@ -37,10 +37,10 @@ class ChessRuleTest {
         Pawn blackPawn = (Pawn)chessBoard.getPiece(Position.of(1, 4));
         Queen blackQueen = (Queen)chessBoard.getPiece(Position.of(0, 3));
 
-        whitePawn1.move(chessBoard, Position.of(6, 5), Position.of(5, 5));
-        blackPawn.move(chessBoard, Position.of(1, 4), Position.of(3, 4));
-        whitePawn2.move(chessBoard, Position.of(6, 6), Position.of(4, 6));
-        blackQueen.move(chessBoard, Position.of(0, 3), Position.of(4, 7));
+        whitePawn1.move(chessBoard, WHITE, Position.of(6, 5), Position.of(5, 5));
+        blackPawn.move(chessBoard, BLACK, Position.of(1, 4), Position.of(3, 4));
+        whitePawn2.move(chessBoard, WHITE, Position.of(6, 6), Position.of(4, 6));
+        blackQueen.move(chessBoard, BLACK, Position.of(0, 3), Position.of(4, 7));
 
         assertTrue(whiteKing.isCheckmate(chessBoard));
     }
@@ -66,12 +66,12 @@ class ChessRuleTest {
         King whiteKing = (King)chessBoard.getPiece(Position.of(7, 4));
         Queen blackQueen = (Queen)chessBoard.getPiece(Position.of(0, 3));
 
-        whiteKing.move(chessBoard, Position.of(7, 3), Position.of(7, 4));
-        whiteKing.move(chessBoard, Position.of(7, 4), Position.of(7, 5));
-        whiteKing.move(chessBoard, Position.of(7, 5), Position.of(7, 6));
-        whiteKing.move(chessBoard, Position.of(7, 6), Position.of(7, 7));
-        blackQueen.move(chessBoard, Position.of(0, 3), Position.of(6, 3));
-        blackQueen.move(chessBoard, Position.of(6, 3), Position.of(6, 5));
+        whiteKing.move(chessBoard, WHITE, Position.of(7, 3), Position.of(7, 4));
+        whiteKing.move(chessBoard, WHITE, Position.of(7, 4), Position.of(7, 5));
+        whiteKing.move(chessBoard, WHITE, Position.of(7, 5), Position.of(7, 6));
+        whiteKing.move(chessBoard, WHITE, Position.of(7, 6), Position.of(7, 7));
+        blackQueen.move(chessBoard, BLACK, Position.of(0, 3), Position.of(6, 3));
+        blackQueen.move(chessBoard, BLACK, Position.of(6, 3), Position.of(6, 5));
 
         assertTrue(whiteKing.isStalemate(chessBoard));
     }

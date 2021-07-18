@@ -3,13 +3,8 @@ package com.chess.game;
 final class GameResult {
     private final PlayerType playerType;
     private final GameStatus gameStatus;
-    private PieceType pieceType;
-    private Position position;
-
-    public GameResult(PlayerType playerType, GameStatus gameStatus) {
-        this.playerType = playerType;
-        this.gameStatus = gameStatus;
-    }
+    private final PieceType pieceType;
+    private final Position position;
 
     public GameResult(PlayerType playerType, PieceType pieceType, Position position, GameStatus gameStatus) {
         this.playerType = playerType;

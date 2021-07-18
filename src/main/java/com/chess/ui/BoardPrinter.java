@@ -5,7 +5,7 @@ import java.util.List;
 
 public final class BoardPrinter {
     void showChessBoard(List<List<String>> board) {
-        System.out.println("  --------------------------------------");
+        System.out.println("  ---------------------------------");
         for(int i=0; i<board.size(); i++) {
             System.out.print(8-i);
             for(int j=0; j<board.get(i).size(); j++) {
@@ -13,9 +13,9 @@ public final class BoardPrinter {
                 System.out.print(" | " + getPieceChar(value));
             }
             System.out.print(" |" + "\n");
-            System.out.println("  --------------------------------------");
+            System.out.println("  ---------------------------------");
         }
-        System.out.println("   　A　  B　  C　  D　  E　  F　  G　  H  ");
+        System.out.println("   　A   B   C   D   E   F   G   H  ");
     }
 
     private char getPieceChar(String value) {
@@ -28,6 +28,6 @@ public final class BoardPrinter {
         else if(playerType.equals("WHITE"))
             return PieceWhiteChar.valueOf(pieceType).getValue();
         else
-            return '　';
+            return ' ';
     }
 }

@@ -24,7 +24,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("기물검색")
     void search_piece() {
-        Piece piece = chessBoard.getPiece(BLACK, PAWN, Position.of(1, 4));
+        Piece piece = chessBoard.getPiece(Position.of(1, 4));
 
         assertEquals(PAWN, piece.getPieceType());
     }

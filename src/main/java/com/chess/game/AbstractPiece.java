@@ -23,23 +23,24 @@ abstract class AbstractPiece implements Piece {
     }
 
     @Override
-    public PieceStatus move(ChessBoard board, Position position, Position targetPosition) {
-        if(validate(board, position, targetPosition)) {
+    public PieceStatus move(ChessBoard board, PlayerType playerType, Position position, Position targetPosition) {
+        if(validate(board, playerType, position, targetPosition)) {
             return logic(board, position, targetPosition);
         } else {
             return INVALID_MOVE;
         }
     }
 
-    boolean validate(ChessBoard board, Position position, Position targetPosition) {
-        Piece piece = board.getPiece(position);
+    boolean validate(ChessBoard board, PlayerType playerType, Position position, Position targetPosition) {
         Piece targetPiece = board.getPiece(targetPosition);
 
         if(position.equals(targetPosition) || !board.validPiecePosition(targetPosition))
             return false;
-        if(targetPiece.getPieceType() == KING)
+        if(getPieceType() == NONE || targetPiece.getPieceType() == KING)
             return false;
-        if(piece.getPlayerType() == targetPiece.getPlayerType())
+        if(getPlayerType() == targetPiece.getPlayerType())
+            return false;
+        if(getPlayerType() != playerType)
             return false;
 
         return checkPieceRange(board, position, targetPosition);

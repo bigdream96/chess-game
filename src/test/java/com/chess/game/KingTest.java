@@ -30,8 +30,8 @@ class KingTest {
         Pawn pawn = (Pawn)chessBoard.getPiece(Position.of(6, 4));
         King king = (King)chessBoard.getPiece(Position.of(7, 4));
 
-        pawn.move(chessBoard, Position.of(6, 4), Position.of(4, 4));
-        king.move(chessBoard, Position.of(7, 4), Position.of(6, 4));
+        pawn.move(chessBoard, WHITE, Position.of(6, 4), Position.of(4, 4));
+        king.move(chessBoard, WHITE, Position.of(7, 4), Position.of(6, 4));
 
         assertEquals(king, chessBoard.getPiece(Position.of(6, 4)));
         assertEquals(pawn, chessBoard.getPiece(Position.of(4, 4)));
@@ -43,16 +43,16 @@ class KingTest {
         King king = (King)chessBoard.getPiece(Position.of(7, 4));
 
         // 보드판 범위를 벗어난 경우
-        king.move(chessBoard, Position.of(7,4), Position.of(8, 4));
+        king.move(chessBoard, WHITE, Position.of(7,4), Position.of(8, 4));
 
         // 가는 길 중간에 기물이 있는 경우
-        king.move(chessBoard, Position.of(7,4), Position.of(6, 4));
+        king.move(chessBoard, WHITE, Position.of(7,4), Position.of(6, 4));
 
         // 같은 위치로 이동한 경우
-        king.move(chessBoard, Position.of(7,4), Position.of(7, 4));
+        king.move(chessBoard, WHITE, Position.of(7,4), Position.of(7, 4));
 
         // 동일 플레이어의 기물을 공격한 경우
-        king.move(chessBoard, Position.of(7,4), Position.of(7, 5));
+        king.move(chessBoard, WHITE, Position.of(7,4), Position.of(7, 5));
 
         assertEquals(king, chessBoard.getPiece(Position.of(7,4)));
     }
@@ -64,12 +64,12 @@ class KingTest {
         Pawn pawn = (Pawn)chessBoard.getPiece(Position.of(6, 4));
         Knight knight = (Knight)chessBoard.getPiece(Position.of(0, 6));
 
-        pawn.move(chessBoard, Position.of(6, 4), Position.of(4, 4));
-        pawn.move(chessBoard, Position.of(4, 4), Position.of(3, 4));
-        king.move(chessBoard, Position.of(7, 4), Position.of(6, 4));
-        king.move(chessBoard, Position.of(6, 4), Position.of(5, 4));
-        king.move(chessBoard, Position.of(5, 4), Position.of(4, 4));
-        knight.move(chessBoard, Position.of(0, 6), Position.of(2, 5));
+        pawn.move(chessBoard, WHITE, Position.of(6, 4), Position.of(4, 4));
+        pawn.move(chessBoard, WHITE, Position.of(4, 4), Position.of(3, 4));
+        king.move(chessBoard, WHITE, Position.of(7, 4), Position.of(6, 4));
+        king.move(chessBoard, WHITE, Position.of(6, 4), Position.of(5, 4));
+        king.move(chessBoard, WHITE, Position.of(5, 4), Position.of(4, 4));
+        knight.move(chessBoard, BLACK, Position.of(0, 6), Position.of(2, 5));
 
         assertTrue(king.isCheck(chessBoard));
     }
@@ -84,11 +84,11 @@ class KingTest {
         King king = (King)chessBoard.getPiece(Position.of(7, 4));
         Rook rook = (Rook)chessBoard.getPiece(Position.of(7, 7));
 
-        pawn1.move(chessBoard, Position.of(6, 5), Position.of(4, 5));
-        pawn2.move(chessBoard, Position.of(6, 6), Position.of(4, 6));
-        bishop.move(chessBoard, Position.of(7, 5), Position.of(5, 7));
-        knight.move(chessBoard, Position.of(7, 6), Position.of(5, 5));
-        king.move(chessBoard, Position.of(7, 4), Position.of(7, 6));
+        pawn1.move(chessBoard, WHITE, Position.of(6, 5), Position.of(4, 5));
+        pawn2.move(chessBoard, WHITE, Position.of(6, 6), Position.of(4, 6));
+        bishop.move(chessBoard, WHITE, Position.of(7, 5), Position.of(5, 7));
+        knight.move(chessBoard, WHITE, Position.of(7, 6), Position.of(5, 5));
+        king.move(chessBoard, WHITE, Position.of(7, 4), Position.of(7, 6));
 
         assertEquals(king, chessBoard.getPiece(Position.of(7, 6)));
         assertEquals(rook, chessBoard.getPiece(Position.of(7, 5)));
@@ -106,13 +106,13 @@ class KingTest {
         King king = (King)chessBoard.getPiece(Position.of(7, 4));
         Rook rook = (Rook)chessBoard.getPiece(Position.of(7, 0));
 
-        pawn1.move(chessBoard, Position.of(6, 1), Position.of(4, 1));
-        pawn2.move(chessBoard, Position.of(6, 2), Position.of(4, 2));
-        pawn3.move(chessBoard, Position.of(6, 3), Position.of(4, 3));
-        knight.move(chessBoard, Position.of(7, 1), Position.of(5, 0));
-        bishop.move(chessBoard, Position.of(7, 2), Position.of(2, 7));
-        queen.move(chessBoard, Position.of(7, 3), Position.of(5, 1));
-        king.move(chessBoard, Position.of(7, 4), Position.of(7, 2));
+        pawn1.move(chessBoard, WHITE, Position.of(6, 1), Position.of(4, 1));
+        pawn2.move(chessBoard, WHITE, Position.of(6, 2), Position.of(4, 2));
+        pawn3.move(chessBoard, WHITE, Position.of(6, 3), Position.of(4, 3));
+        knight.move(chessBoard, WHITE, Position.of(7, 1), Position.of(5, 0));
+        bishop.move(chessBoard, WHITE, Position.of(7, 2), Position.of(2, 7));
+        queen.move(chessBoard, WHITE, Position.of(7, 3), Position.of(5, 1));
+        king.move(chessBoard, WHITE, Position.of(7, 4), Position.of(7, 2));
 
         assertEquals(king, chessBoard.getPiece(Position.of(7, 2)));
         assertEquals(rook, chessBoard.getPiece(Position.of(7, 3)));
@@ -130,13 +130,13 @@ class KingTest {
         King king = (King)chessBoard.getPiece(Position.of(0, 4));
         Rook rook = (Rook)chessBoard.getPiece(Position.of(0, 0));
 
-        pawn1.move(chessBoard, Position.of(1, 1), Position.of(3, 1));
-        pawn2.move(chessBoard, Position.of(1, 2), Position.of(3, 2));
-        pawn3.move(chessBoard, Position.of(1, 3), Position.of(3, 3));
-        knight.move(chessBoard, Position.of(0, 1), Position.of(2, 0));
-        bishop.move(chessBoard, Position.of(0, 2), Position.of(5, 7));
-        queen.move(chessBoard, Position.of(0, 3), Position.of(2, 1));
-        king.move(chessBoard, Position.of(0, 4), Position.of(0, 2));
+        pawn1.move(chessBoard, BLACK, Position.of(1, 1), Position.of(3, 1));
+        pawn2.move(chessBoard, BLACK, Position.of(1, 2), Position.of(3, 2));
+        pawn3.move(chessBoard, BLACK, Position.of(1, 3), Position.of(3, 3));
+        knight.move(chessBoard, BLACK, Position.of(0, 1), Position.of(2, 0));
+        bishop.move(chessBoard, BLACK, Position.of(0, 2), Position.of(5, 7));
+        queen.move(chessBoard, BLACK, Position.of(0, 3), Position.of(2, 1));
+        king.move(chessBoard, BLACK, Position.of(0, 4), Position.of(0, 2));
 
         assertEquals(king, chessBoard.getPiece(Position.of(0, 2)));
         assertEquals(rook, chessBoard.getPiece(Position.of(0, 3)));
@@ -152,11 +152,11 @@ class KingTest {
         King king = (King)chessBoard.getPiece(Position.of(0, 4));
         Rook rook = (Rook)chessBoard.getPiece(Position.of(0, 7));
 
-        pawn1.move(chessBoard, Position.of(1, 5), Position.of(3, 5));
-        pawn2.move(chessBoard, Position.of(1, 6), Position.of(3, 6));
-        bishop.move(chessBoard, Position.of(0, 5), Position.of(2, 7));
-        knight.move(chessBoard, Position.of(0, 6), Position.of(2, 5));
-        king.move(chessBoard, Position.of(0, 4), Position.of(0, 6));
+        pawn1.move(chessBoard, BLACK, Position.of(1, 5), Position.of(3, 5));
+        pawn2.move(chessBoard, BLACK, Position.of(1, 6), Position.of(3, 6));
+        bishop.move(chessBoard, BLACK, Position.of(0, 5), Position.of(2, 7));
+        knight.move(chessBoard, BLACK, Position.of(0, 6), Position.of(2, 5));
+        king.move(chessBoard, BLACK, Position.of(0, 4), Position.of(0, 6));
 
         assertEquals(king, chessBoard.getPiece(Position.of(0, 6)));
         assertEquals(rook, chessBoard.getPiece(Position.of(0, 5)));

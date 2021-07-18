@@ -10,21 +10,6 @@ final class Bishop extends AbstractPiece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return super.getPieceType();
-    }
-
-    @Override
-    public PlayerType getPlayerType() {
-        return super.getPlayerType();
-    }
-
-    @Override
-    public PieceStatus move(ChessBoard board, Position position, Position targetPosition) {
-        return super.move(board, position, targetPosition);
-    }
-
-    @Override
     boolean checkPieceRange(ChessBoard board, Position position, Position targetPosition) {
         int positionX = position.getX();
         int positionY = position.getY();
@@ -79,7 +64,4 @@ final class Bishop extends AbstractPiece {
     boolean isPossibleAttack(ChessBoard board, Position position, Position targetPosition) {
         return checkPieceRange(board, position, targetPosition);
     }
-
-    @Override
-    public String toString() { return super.toString(); }
 }

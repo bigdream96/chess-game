@@ -10,21 +10,6 @@ final class Knight extends AbstractPiece {
     }
 
     @Override
-    public PieceType getPieceType() {
-        return super.getPieceType();
-    }
-
-    @Override
-    public PlayerType getPlayerType() {
-        return super.getPlayerType();
-    }
-
-    @Override
-    public PieceStatus move(ChessBoard board, Position position, Position targetPosition) {
-        return super.move(board, position, targetPosition);
-    }
-
-    @Override
     boolean checkPieceRange(ChessBoard board, Position position, Position targetPosition) {
         int n1 = abs(targetPosition.getX() - position.getX());
         int n2 = abs(targetPosition.getY() - position.getY());
@@ -41,10 +26,5 @@ final class Knight extends AbstractPiece {
     @Override
     boolean isPossibleAttack(ChessBoard board, Position position, Position targetPosition) {
         return checkPieceRange(board, position, targetPosition);
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 }
