@@ -1,7 +1,7 @@
 package com.chess.ui;
 
 public final class OSVerifier {
-    public final static String os = System.getProperty("os.name");
+    public final static String os = System.getProperty("os.name").toLowerCase();
 
     public SystemType check() {
         if (os.contains("win")) {
