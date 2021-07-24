@@ -20,7 +20,7 @@ public final class ChessRule implements Rule {
     @Override
     public GameResult judge(PlayerType playerType, ChessBoard board, Piece piece, PieceStatus pieceStatus) {
         if (pieceStatus == INVALID_MOVE)
-            return new GameResult(playerType, piece.getPieceType(), board.getPosition(piece), AGAIN);
+            return GameResult.of(playerType, piece.getPieceType(), board.getPosition(piece), AGAIN);
 
         GameStatus gameStatus;
         King enemyKing = (King)board.getPlayerPiece(getEnemyPlayerType(playerType), KING);
@@ -42,7 +42,7 @@ public final class ChessRule implements Rule {
 
         chessGameNotation.add(playerType, NotationItem.of(piece, board.getPosition(piece), pieceStatus));
 
-        return new GameResult(playerType, piece.getPieceType(), board.getPosition(piece), gameStatus);
+        return GameResult.of(playerType, piece.getPieceType(), board.getPosition(piece), gameStatus);
     }
 
     private boolean checkFiftyMoveRule(PlayerType playerType) {

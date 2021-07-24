@@ -13,7 +13,6 @@ public final class AppConfig {
     private final OSVerifier OS_VERIFIER = new OSVerifier();
     private final ChessUI CHESS_UI = new ChessUI(new Scanner(System.in), new BoardPrinter(osVerifier()), new ConsoleFormatter());
 
-
     public ChessGameNotation chessGameNotation() { return CHESS_GAME_NOTATION; }
     public Rule rule() { return RULE; }
     public ChessBoardSetting chessBoardSetting() { return CHESS_BOARD_SETTING; }

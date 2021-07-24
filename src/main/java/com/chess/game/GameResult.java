@@ -6,7 +6,7 @@ final class GameResult {
     private final PieceType pieceType;
     private final Position position;
 
-    public GameResult(PlayerType playerType, PieceType pieceType, Position position, GameStatus gameStatus) {
+    private GameResult(PlayerType playerType, PieceType pieceType, Position position, GameStatus gameStatus) {
         this.playerType = playerType;
         this.pieceType = pieceType;
         this.position = position;
@@ -27,6 +27,10 @@ final class GameResult {
 
     public Position getPosition() {
         return position;
+    }
+
+    public static GameResult of(PlayerType playerType, PieceType pieceType, Position position, GameStatus gameStatus) {
+        return new GameResult(playerType, pieceType, position, gameStatus);
     }
 
     @Override
