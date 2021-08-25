@@ -21,28 +21,28 @@ final class King extends AbstractPiece {
 
     @Override
     boolean checkPieceRange(ChessBoard board, Position position, Position targetPosition) {
-        int n1 = abs(targetPosition.getX() - position.getX());
-        int n2 = abs(targetPosition.getY() - position.getY());
-        return checkCastling(board, position, targetPosition) || ( (0 <= n1 && n1 <=1) && (0 <= n2 && n2 <=1) );
+        int lineDiff = abs(targetPosition.getX() - position.getX());
+        int diagonalDiff = abs(targetPosition.getY() - position.getY());
+        boolean isRange = (0 <= lineDiff && lineDiff <= 1) && (0 <= diagonalDiff && diagonalDiff <= 1);
+        return isRange || checkCastling(board, position, targetPosition);
     }
 
     @Override
     PieceStatus logic(ChessBoard board, Position position, Position targetPosition) {
-        int n = targetPosition.getY() - position.getY();
+        int diagonalDiff = targetPosition.getY() - position.getY();
 
-        // 캐슬링인 경우
         if(checkCastling(board, position, targetPosition)) {
-            Position rookPosition = Position.of(position.getX(), position.getY()+(n > 0 ? 3 : -4));
+            Position rookPosition = Position.of(position.getX(), position.getY()+(diagonalDiff > 0 ? 3 : -4));
             Rook rook = (Rook)board.getPiece(rookPosition);
 
-            board.setPiece(rook, Position.of(rookPosition.getX(), rookPosition.getY()+(n > 0 ? -2 : 3)));
-            board.setPiece(this, Position.of(position.getX(), position.getY()+(n > 0 ? 2 : -2)));
+            board.setPiece(rook, Position.of(rookPosition.getX(), rookPosition.getY()+(diagonalDiff > 0 ? -2 : 3)));
+            board.setPiece(this, Position.of(position.getX(), position.getY()+(diagonalDiff > 0 ? 2 : -2)));
 
             return CASTLING;
         }
 
         board.setPiece(this, targetPosition);
-        if(initPosition) initPosition = false;
+        if(isInitPosition()) initPosition = false;
 
         return board.getPiece(targetPosition) instanceof NonePiece ? ONE_MOVE : TAKES;
     }
@@ -53,30 +53,28 @@ final class King extends AbstractPiece {
     }
 
     boolean checkCastling(ChessBoard board, Position position, Position targetPosition) {
-        int n = targetPosition.getY() - position.getY();
+        int diagonalDiff = targetPosition.getY() - position.getY();
 
-        // 캐슬링인 경우
         if(isInitPosition()
         && targetPosition.getX() == position.getX()
         && !isCheck(board)
         && !board.rangeAttackPossible(getEnemyPlayerType(getPlayerType()), position, targetPosition)
-        && abs(n) == 2) {
-            Position rookPosition = Position.of(position.getX(), position.getY()+(n > 0 ? 3 : -4));
+        && abs(diagonalDiff) == 2) {
+            Position rookPosition = Position.of(position.getX(), position.getY()+(diagonalDiff > 0 ? 3 : -4));
             Piece p = board.getPiece(rookPosition);
 
             if(p.getPieceType() == ROOK) {
                 Rook rook = (Rook)p;
 
                 return rook.isInitPosition()
-                    && board.rangeEmpty(Position.of(position.getX(), position.getY() + (n > 0 ? 1 : -3)),
-                                        Position.of(position.getX(), position.getY() + (n > 0 ? 2 : -1)));
+                    && board.rangeEmpty(Position.of(position.getX(), position.getY() + (diagonalDiff > 0 ? 1 : -3)),
+                                        Position.of(position.getX(), position.getY() + (diagonalDiff > 0 ? 2 : -1)));
             }
         }
 
         return false;
     }
 
-    /* 해당 킹이 체크인지 확인 */
     boolean isCheck(ChessBoard board) {
         List<AbstractPiece> pieces = board.getPlayerPieces(getEnemyPlayerType(getPlayerType()));
 
@@ -86,8 +84,7 @@ final class King extends AbstractPiece {
 
         return false;
     }
-    
-    /* 해당 킹이 체크메이트인지 확인 */
+
     boolean isCheckmate(ChessBoard board) {
         PlayerType enemyPlayerType = getEnemyPlayerType(getPlayerType());
         Position selfPosition = board.getPosition(this);
@@ -126,8 +123,7 @@ final class King extends AbstractPiece {
             && !possiblePositions.containsValue(false)
             && !attackEnemyPieces.containsValue(true);
     }
-    
-    /* 해당 킹이 스테일메이트인지 확인 */
+
     boolean isStalemate(ChessBoard board) {
         return !isCheck(board) && isCheckmate(board);
     }

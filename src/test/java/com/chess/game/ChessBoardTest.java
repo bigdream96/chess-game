@@ -84,7 +84,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("기물삭제")
     void remove_piece() {
-        Pawn pawn = (Pawn)chessBoard.getPiece(Position.of(6, 0));
+        Piece pawn = chessBoard.getPiece(Position.of(6, 0));
         chessBoard.deletePiece(pawn);
 
         assertEquals(NONE, chessBoard.getPiece(Position.of(6, 0)).getPieceType());
@@ -94,7 +94,7 @@ class ChessBoardTest {
     @DisplayName("기물위치검색")
     void get_piece_position() {
         Position position = Position.of(1, 7);
-        Pawn pawn = (Pawn)chessBoard.getPiece(position);
+        Piece pawn = chessBoard.getPiece(position);
         Position pawnPosition = chessBoard.getPosition(pawn);
 
         assertEquals(position, pawnPosition);

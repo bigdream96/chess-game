@@ -20,9 +20,9 @@ class KnightTest {
     }
 
     @Test
-    @DisplayName("기본이동")
+    @DisplayName("행마")
     void move_knight() {
-        Knight knight = (Knight)chessBoard.getPiece(Position.of(7,6));
+        Piece knight = chessBoard.getPiece(Position.of(7,6));
 
         knight.move(chessBoard, WHITE, Position.of(7,6), Position.of(5,5));
         knight.move(chessBoard, WHITE, Position.of(5,5), Position.of(4,3));
@@ -32,23 +32,33 @@ class KnightTest {
 
         assertEquals(knight, chessBoard.getPiece(Position.of(5, 3)));
     }
-    
-    @Test
-    @DisplayName("잘못된이동")
-    void invalid_move_knight() {
-        Knight knight = (Knight)chessBoard.getPiece(Position.of(7,6));
 
-        // 보드판 범위를 벗어난 경우
+    @Test
+    @DisplayName("보드판_범위를 벗어난_경우")
+    void out_of_board_range() {
+        Piece knight = chessBoard.getPiece(Position.of(7,6));
+
         knight.move(chessBoard, WHITE, Position.of(7, 6), Position.of(9, 7));
 
-        // 같은 위치로 이동한 경우
+        assertEquals(knight, chessBoard.getPiece(Position.of(7, 6)));
+    }
+
+    @Test
+    @DisplayName("같은_위치로_이동한_경우")
+    void moved_to_the_same_location() {
+        Piece knight = chessBoard.getPiece(Position.of(7,6));
+
         knight.move(chessBoard, WHITE, Position.of(7, 6), Position.of(7, 6));
 
-        // 동일 플레이어의 기물을 공격한 경우
-        knight.move(chessBoard, WHITE, Position.of(7, 6), Position.of(9, 7));
+        assertEquals(knight, chessBoard.getPiece(Position.of(7, 6)));
+    }
 
-        // 행마법에 어긋난경우
-        knight.move(chessBoard, WHITE, Position.of(7, 6), Position.of(4, 5));
+    @Test
+    @DisplayName("동일플레이어의_기물을_공격한_경우")
+    void attacking_the_same_player_pieces() {
+        Piece knight = chessBoard.getPiece(Position.of(7,6));
+
+        knight.move(chessBoard, WHITE, Position.of(7, 6), Position.of(9, 7));
 
         assertEquals(knight, chessBoard.getPiece(Position.of(7, 6)));
     }

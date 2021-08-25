@@ -10,8 +10,8 @@ public final class ChessGameNotation {
     private final Map<PlayerType, List<NotationItem>> playerNotationItems = new LinkedHashMap<>();
 
     {
-        playerNotationItems.put(WHITE, new LinkedList<>());
-        playerNotationItems.put(BLACK, new LinkedList<>());
+        playerNotationItems.put(WHITE, new ArrayList<>());
+        playerNotationItems.put(BLACK, new ArrayList<>());
     }
 
     void add(PlayerType playerType, NotationItem notationItem) {

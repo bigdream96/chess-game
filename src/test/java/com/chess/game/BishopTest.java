@@ -20,10 +20,10 @@ class BishopTest {
     }
 
     @Test
-    @DisplayName("기본이동")
+    @DisplayName("행마")
     void move_bishop() {
-        Pawn pawn = (Pawn)chessBoard.getPiece(Position.of(6, 4));
-        Bishop bishop = (Bishop)chessBoard.getPiece(Position.of(7, 5));
+        Piece pawn = chessBoard.getPiece(Position.of(6, 4));
+        Piece bishop = chessBoard.getPiece(Position.of(7, 5));
 
         pawn.move(chessBoard, WHITE, Position.of(6, 4), Position.of(4, 4));
         bishop.move(chessBoard, WHITE, Position.of(7, 5), Position.of(4, 2));
@@ -40,24 +40,41 @@ class BishopTest {
     }
 
     @Test
-    @DisplayName("잘못된이동")
-    void invalid_move_bishop() {
-        Bishop bishop = (Bishop)chessBoard.getPiece(Position.of(7, 5));
+    @DisplayName("보드판_범위를 벗어난_경우")
+    void out_of_board_range() {
+        Piece bishop = chessBoard.getPiece(Position.of(7, 5));
 
-        // 보드판 범위를 벗어난 경우
         bishop.move(chessBoard, WHITE, Position.of(7,5), Position.of(8, 3));
 
-        // 가는 길 중간에 기물이 있는 경우
+        assertEquals(bishop, chessBoard.getPiece(Position.of(7,5)));
+    }
+
+    @Test
+    @DisplayName("가는길_중간에_기물이_있는_경우")
+    void if_there_is_piece_on_the_way() {
+        Piece bishop = chessBoard.getPiece(Position.of(7, 5));
+
         bishop.move(chessBoard, WHITE, Position.of(7,5), Position.of(5, 3));
 
-        // 같은 위치로 이동한 경우
+        assertEquals(bishop, chessBoard.getPiece(Position.of(7,5)));
+    }
+
+    @Test
+    @DisplayName("같은_위치로_이동한_경우")
+    void moved_to_the_same_location() {
+        Piece bishop = chessBoard.getPiece(Position.of(7, 5));
+
         bishop.move(chessBoard, WHITE, Position.of(7,5), Position.of(7, 5));
 
-        // 동일 플레이어의 기물을 공격한 경우
-        bishop.move(chessBoard, WHITE, Position.of(7,5), Position.of(6, 6));
+        assertEquals(bishop, chessBoard.getPiece(Position.of(7,5)));
+    }
 
-        // 행마법에 어긋난경우
-        bishop.move(chessBoard, WHITE, Position.of(7,5), Position.of(7, 4));
+    @Test
+    @DisplayName("동일플레이어의_기물을_공격한_경우")
+    void attacking_the_same_player_pieces() {
+        Piece bishop = chessBoard.getPiece(Position.of(7, 5));
+
+        bishop.move(chessBoard, WHITE, Position.of(7,5), Position.of(6, 6));
 
         assertEquals(bishop, chessBoard.getPiece(Position.of(7,5)));
     }

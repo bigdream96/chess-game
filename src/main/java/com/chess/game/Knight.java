@@ -11,10 +11,10 @@ final class Knight extends AbstractPiece {
 
     @Override
     boolean checkPieceRange(ChessBoard board, Position position, Position targetPosition) {
-        int n1 = abs(targetPosition.getX() - position.getX());
-        int n2 = abs(targetPosition.getY() - position.getY());
+        int lineDiff = abs(targetPosition.getX() - position.getX());
+        int diagonalDiff = abs(targetPosition.getY() - position.getY());
 
-        return 0 < n1 && n1 <= 2 && 0 < n2 && n2 <= 2;
+        return (0 < lineDiff && lineDiff <= 2) && (0 < diagonalDiff && diagonalDiff <= 2);
     }
 
     @Override

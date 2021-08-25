@@ -17,11 +17,7 @@ final class Rook extends AbstractPiece {
         return initPosition;
     }
 
-    @Override
-    boolean checkPieceRange(ChessBoard board, Position position, Position targetPosition) {
-        if(!(position.getX() == targetPosition.getX() || position.getY() == targetPosition.getY()))
-            return false;
-
+    boolean checkPiecesOnTheWay(ChessBoard board, Position position, Position targetPosition) {
         List<Piece> pieces;
         if(position.getX() == targetPosition.getX())
             if(position.getY() > targetPosition.getY())
@@ -38,9 +34,18 @@ final class Rook extends AbstractPiece {
 
         for(Piece piece : pieces)
             if(piece instanceof AbstractPiece)
-                return false;
+                return true;
 
-        return true;
+        return false;
+    }
+
+    private boolean checkPieceRange(Position position, Position targetPosition) {
+        return position.getX() == targetPosition.getX() || position.getY() == targetPosition.getY();
+    }
+
+    @Override
+    boolean checkPieceRange(ChessBoard board, Position position, Position targetPosition) {
+        return checkPieceRange(position, targetPosition) && !checkPiecesOnTheWay(board, position, targetPosition);
     }
 
     @Override

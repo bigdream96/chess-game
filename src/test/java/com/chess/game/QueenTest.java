@@ -20,10 +20,10 @@ class QueenTest {
     }
 
     @Test
-    @DisplayName("기본이동")
+    @DisplayName("행마")
     void move_queen() {
-        Pawn pawn = (Pawn)chessBoard.getPiece(Position.of(6, 3));
-        Queen queen = (Queen)chessBoard.getPiece(Position.of(7, 3));
+        Piece pawn = chessBoard.getPiece(Position.of(6, 3));
+        Piece queen = chessBoard.getPiece(Position.of(7, 3));
 
         pawn.move(chessBoard, WHITE, Position.of(6, 3), Position.of(4, 3));
         queen.move(chessBoard, WHITE, Position.of(7, 3), Position.of(5, 3));
@@ -37,37 +37,42 @@ class QueenTest {
     }
 
     @Test
-    @DisplayName("잘못된이동")
-    void invalid_move_queen() {
-        Pawn pawn = (Pawn)chessBoard.getPiece(Position.of(6, 3));
-        Queen queen = (Queen)chessBoard.getPiece(Position.of(7, 3));
+    @DisplayName("보드판_범위를 벗어난_경우")
+    void out_of_board_range() {
+        Piece queen = chessBoard.getPiece(Position.of(7, 3));
 
-        // 보드판 범위를 벗어난 경우
         queen.move(chessBoard, WHITE, Position.of(7,3), Position.of(8,3));
 
         assertEquals(queen, chessBoard.getPiece(Position.of(7, 3)));
+    }
 
-        // 가는 길 중간에 기물이 있는 경우
+    @Test
+    @DisplayName("가는길_중간에_기물이_있는_경우")
+    void if_there_is_piece_on_the_way() {
+        Piece queen = chessBoard.getPiece(Position.of(7, 3));
+
         queen.move(chessBoard, WHITE, Position.of(7,3), Position.of(5,3));
 
         assertEquals(queen, chessBoard.getPiece(Position.of(7, 3)));
+    }
 
-        pawn.move(chessBoard, WHITE, Position.of(6, 3), Position.of(4, 3));
+    @Test
+    @DisplayName("같은_위치로_이동한_경우")
+    void moved_to_the_same_location() {
+        Piece queen = chessBoard.getPiece(Position.of(7, 3));
 
-        // 같은 위치로 이동한 경우
         queen.move(chessBoard, WHITE, Position.of(7,3), Position.of(7,3));
 
         assertEquals(queen, chessBoard.getPiece(Position.of(7, 3)));
+    }
 
-        // 동일 플레이어의 기물을 공격한 경우
+    @Test
+    @DisplayName("동일플레이어의_기물을_공격한_경우")
+    void attacking_the_same_player_pieces() {
+        Piece queen = chessBoard.getPiece(Position.of(7, 3));
+
         queen.move(chessBoard, WHITE, Position.of(7,3), Position.of(7,2));
 
         assertEquals(queen, chessBoard.getPiece(Position.of(7, 3)));
-
-        // 행마법에 어긋난경우
-        queen.move(chessBoard, WHITE, Position.of(7,3), Position.of(5,3));
-        queen.move(chessBoard, WHITE, Position.of(5,3), Position.of(3,4));
-
-        assertEquals(queen, chessBoard.getPiece(Position.of(5, 3)));
     }
 }

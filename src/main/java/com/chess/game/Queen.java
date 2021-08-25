@@ -59,37 +59,37 @@ final class Queen extends AbstractPiece {
     }
 
     private boolean checkDiagonalPieces(ChessBoard board, Position position, Position targetPosition) {
-        int positionX = position.getX();
-        int positionY = position.getY();
-        int targetPositionX = targetPosition.getX();
-        int targetPositionY = targetPosition.getY();
-        int n1 = targetPositionX - positionX;
-        int n2 = targetPositionY - positionY;
-        int n3 = n1 + n2;
+        int x = position.getX();
+        int y = position.getY();
+        int targetX = targetPosition.getX();
+        int targetY = targetPosition.getY();
+        int lineDiff = targetX - x;
+        int diagonalDiff = targetY - y;
+        int lineDiffAndDiagonalDiff = lineDiff + diagonalDiff;
 
-        if(n3 == 0) {
-            if(n1 > n2) {
-                for(int i=1; i<n1; i++) {
-                    if(board.getPiece(Position.of(positionX + i, positionY - i)) instanceof AbstractPiece) {
+        if(lineDiffAndDiagonalDiff == 0) {
+            if(lineDiff > diagonalDiff) {
+                for(int i=1; i<lineDiff; i++) {
+                    if(board.getPiece(Position.of(x + i, y - i)) instanceof AbstractPiece) {
                         return false;
                     }
                 }
             } else {
-                for(int i=1; i<n2; i++) {
-                    if(board.getPiece(Position.of(positionX - i, positionY + i)) instanceof AbstractPiece) {
+                for(int i=1; i<diagonalDiff; i++) {
+                    if(board.getPiece(Position.of(x - i, y + i)) instanceof AbstractPiece) {
                         return false;
                     }
                 }
             }
-        } else if(n3 > 0) {
-            for(int i=1; i<n1; i++) {
-                if(board.getPiece(Position.of(positionX + i, positionY + i)) instanceof AbstractPiece) {
+        } else if(lineDiffAndDiagonalDiff > 0) {
+            for(int i=1; i<lineDiff; i++) {
+                if(board.getPiece(Position.of(x + i, y + i)) instanceof AbstractPiece) {
                     return false;
                 }
             }
         } else {
-            for(int i=1; i<abs(n1); i++) {
-                if(board.getPiece(Position.of(positionX - i, positionY - i)) instanceof AbstractPiece) {
+            for(int i=1; i<abs(lineDiff); i++) {
+                if(board.getPiece(Position.of(x - i, y - i)) instanceof AbstractPiece) {
                     return false;
                 }
             }

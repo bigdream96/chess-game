@@ -1,7 +1,6 @@
 package com.chess.game;
 
 import static com.chess.game.PieceStatus.*;
-import static com.chess.game.PlayerType.*;
 
 final class NonePiece implements Piece {
     @Override

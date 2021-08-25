@@ -1,34 +1,33 @@
 package com.chess.game;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.chess.game.ChessBoard.*;
+import static com.chess.game.ChessBoard.getMaxNumOfLine;
 import static com.chess.game.PlayerType.*;
 
 public final class ChessBoardSetting {
 
-    public List<List<Piece>> create() {
-        List<List<Piece>> board = new LinkedList<>();
+    public Piece[][] create() {
+        Piece[][] board = new Piece[getMaxNumOfLine()][getMaxNumOfLine()];
 
-        for(int i = 0; i< MAX_NUM_OF_LINE; i++) {
-            board.add(new LinkedList<>());
-
+        for(int i = 0; i< getMaxNumOfLine(); i++) {
             switch (i) {
                 case 0:
-                    board.get(i).addAll(getFirstPieceList(BLACK));
+                    board[i] = getFirstPieceList(BLACK);
                     break;
                 case 1:
-                    board.get(i).addAll(getPawnList(i, BLACK));
+                    board[i] = getPawnList(i, BLACK);
                     break;
                 case 2: case 3: case 4: case 5:
-                    board.get(i).addAll(getEmptyPieceList());
+                    board[i] = getEmptyPieceList();
                     break;
                 case 6:
-                    board.get(i).addAll(getPawnList(i, WHITE));
+                    board[i] = getPawnList(i, WHITE);
                     break;
                 case 7:
-                    board.get(i).addAll(getFirstPieceList(WHITE));
+                    board[i] = getFirstPieceList(WHITE);
                     break;
                 default:
                     break;
@@ -38,25 +37,25 @@ public final class ChessBoardSetting {
         return board;
     }
 
-    private List<Piece> getFirstPieceList(PlayerType playerType) {
-        List<Piece> pieces = new LinkedList<>();
+    private Piece[] getFirstPieceList(PlayerType playerType) {
+        Piece[] pieces = new Piece[getMaxNumOfLine()];
 
-        for(int i = 0; i < MAX_NUM_OF_LINE; i++) {
+        for(int i=0; i<pieces.length; i++) {
             switch (i) {
                 case 0: case 7:
-                    pieces.add(new Rook(playerType));
+                    pieces[i] = new Rook(playerType);
                     break;
                 case 1: case 6:
-                    pieces.add(new Knight(playerType));
+                    pieces[i] = new Knight(playerType);
                     break;
                 case 2: case 5:
-                    pieces.add(new Bishop(playerType));
+                    pieces[i] = new Bishop(playerType);
                     break;
                 case 3:
-                    pieces.add(new Queen(playerType));
+                    pieces[i] = new Queen(playerType);
                     break;
                 case 4:
-                    pieces.add(new King(playerType));
+                    pieces[i] = new King(playerType);
                     break;
                 default:
                     break;
@@ -66,21 +65,21 @@ public final class ChessBoardSetting {
         return pieces;
     }
 
-    private List<Piece> getPawnList(int n, PlayerType playerType) {
-        List<Piece> pieces = new LinkedList<>();
+    private Piece[] getPawnList(int n, PlayerType playerType) {
+        Piece[] pieces = new Piece[getMaxNumOfLine()];
 
-        for(int i = 0; i< MAX_NUM_OF_LINE; i++) {
-            pieces.add(new Pawn(playerType, Position.of(n, i)));
+        for(int i=0; i<pieces.length; i++) {
+            pieces[i] = new Pawn(playerType, Position.of(n, i));
         }
 
         return pieces;
     }
 
-    private List<Piece> getEmptyPieceList() {
-        List<Piece> pieces = new LinkedList<>();
+    private Piece[] getEmptyPieceList() {
+        Piece[] pieces = new Piece[getMaxNumOfLine()];
 
-        for(int i = 0; i< MAX_NUM_OF_LINE; i++) {
-            pieces.add(new NonePiece());
+        for(int i=0; i<pieces.length; i++) {
+            pieces[i] = new NonePiece();
         }
 
         return pieces;

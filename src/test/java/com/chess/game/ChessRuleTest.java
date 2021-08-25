@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.chess.game.GameStatus.*;
@@ -104,7 +104,7 @@ class ChessRuleTest {
     void is_only_king_and_knight() {
         List<AbstractPiece> blackPieces = chessBoard.getPlayerPieces(BLACK);
         List<AbstractPiece> whitePieces = chessBoard.getPlayerPieces(WHITE);
-        List<Knight> whiteKnights = new LinkedList<>();
+        List<Knight> whiteKnights = new ArrayList<>();
 
         // 블랙 킹만 남기기
         for(AbstractPiece blackPiece : blackPieces) {
@@ -137,7 +137,7 @@ class ChessRuleTest {
     void is_only_king_and_bishop() {
         List<AbstractPiece> blackPieces = chessBoard.getPlayerPieces(BLACK);
         List<AbstractPiece> whitePieces = chessBoard.getPlayerPieces(WHITE);
-        List<Bishop> whiteBishops = new LinkedList<>();
+        List<Bishop> whiteBishops = new ArrayList<>();
 
         // 블랙 킹만 남기기
         for(AbstractPiece blackPiece : blackPieces) {
@@ -170,8 +170,8 @@ class ChessRuleTest {
     void is_only_king_and_bishop_is_same_color() {
         List<AbstractPiece> blackPieces = chessBoard.getPlayerPieces(BLACK);
         List<AbstractPiece> whitePieces = chessBoard.getPlayerPieces(WHITE);
-        List<Bishop> blackBishops = new LinkedList<>();
-        List<Bishop> whiteBishops = new LinkedList<>();
+        List<Bishop> blackBishops = new ArrayList<>();
+        List<Bishop> whiteBishops = new ArrayList<>();
 
         // 블랙 킹과 나이트2개만 남기기
         for(AbstractPiece blackPiece : blackPieces) {

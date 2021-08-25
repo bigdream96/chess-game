@@ -8,10 +8,10 @@ import static com.chess.game.ChessBoard.*;
 import static java.lang.Integer.*;
 
 public final class UserMessage {
-    private PieceType pieceType;            // 기물유형
-    private Position position;              // 기물이전위치
-    private Position targetPosition;        // 기물다음위치
-    private final GameStatus gameStatus;    // 게임상태
+    private PieceType pieceType;
+    private Position position;
+    private Position targetPosition;
+    private final GameStatus gameStatus;
 
     private UserMessage(GameStatus gameStatus) {
         this.gameStatus = gameStatus;
@@ -43,7 +43,7 @@ public final class UserMessage {
     }
 
     private static Position convertToPos(String prevPos) {
-        int x = MAX_NUM_OF_LINE - parseInt(prevPos.split("")[1]);
+        int x = getMaxNumOfLine() - parseInt(prevPos.split("")[1]);
         int y = (prevPos.split("")[0].charAt(0))-'a';
         return Position.of(x, y);
     }

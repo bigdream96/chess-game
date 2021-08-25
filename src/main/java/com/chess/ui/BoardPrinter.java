@@ -1,8 +1,5 @@
 package com.chess.ui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static com.chess.ui.SystemType.*;
 
 public final class BoardPrinter {
@@ -18,12 +15,12 @@ public final class BoardPrinter {
         systemType = osVerifier.check();
     }
 
-    void showChessBoard(List<List<String>> board) {
+    void showChessBoard(String[][] board) {
         System.out.println("  ---------------------------------" + (systemType == WINDOWS ? "-----" : ""));
-        for(int i=0; i<board.size(); i++) {
+        for(int i=0; i<board.length; i++) {
             System.out.print(8-i);
-            for(int j=0; j<board.get(i).size(); j++) {
-                String value = board.get(i).get(j);
+            for(int j=0; j<board[i].length; j++) {
+                String value = board[i][j];
                 System.out.print(" | " + getPieceChar(value));
             }
             System.out.print(" |" + "\n");
@@ -33,9 +30,9 @@ public final class BoardPrinter {
     }
 
     private char getPieceChar(String value) {
-        List<String> list = Arrays.asList(value.split(","));
-        String pieceType = list.get(0);
-        String playerType = list.get(1);
+        String[] arr = value.split(",");
+        String pieceType = arr[0];
+        String playerType = arr[1];
 
         if(playerType.equals("BLACK"))
             return PieceBlackChar.valueOf(pieceType).getValue();

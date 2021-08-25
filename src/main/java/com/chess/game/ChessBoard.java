@@ -1,30 +1,32 @@
 package com.chess.game;
 
+import java.util.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 public final class ChessBoard {
-    public static final int MAX_NUM_OF_LINE = 8;
+    private static final int MAX_NUM_OF_LINE = 8;
 
     private final Rule rule;
-    private final List<List<Piece>> board;
+    private final Piece[][] board;
 
-    public ChessBoard(Rule rule, List<List<Piece>> board) {
+    public ChessBoard(Rule rule, Piece[][] board) {
         this.rule = rule;
         this.board = board;
     }
 
-    public List<List<Piece>> getBoard() {
-        return board;
+    public static int getMaxNumOfLine() {
+        return MAX_NUM_OF_LINE;
+    }
+
+    public Piece[][] getBoard() {
+        return board.clone();
     }
 
     /* 기물검색하기 */
     Piece getPiece(Position position) {
-        for(int i=0; i<board.size(); i++) {
-            for(int j=0; j<board.get(i).size(); j++) {
-                Piece piece = board.get(i).get(j);
+        for(int i=0; i<board.length; i++) {
+            for(int j=0; j<board[0].length; j++) {
+                Piece piece = board[i][j];
 
                 if(position.getX() == i && position.getY() == j)
                     return piece;
@@ -49,15 +51,15 @@ public final class ChessBoard {
     List<Piece> getAllPieces() {
         List<Piece> list = new ArrayList<>();
 
-        for (List<Piece> pieces : board)
-            list.addAll(pieces);
+        for (Piece[] pieces : board)
+            list.addAll(Arrays.asList(pieces).subList(0, board[0].length));
 
         return list;
     }
 
     /* 특정플레이어의 기물리스트 가져오기 */
     List<AbstractPiece> getPlayerPieces(PlayerType playerType) {
-        List<AbstractPiece> pieces = new LinkedList<>();
+        List<AbstractPiece> pieces = new ArrayList<>();
 
         for(Piece piece : getAllPieces())
             if(piece instanceof AbstractPiece && piece.getPlayerType() == playerType)
@@ -92,19 +94,19 @@ public final class ChessBoard {
     void newPiece(PlayerType playerType, PieceType pieceType, Position position) {
         switch (pieceType) {
             case QUEEN:
-                board.get(position.getX()).set(position.getY(), new Queen(playerType));
+                board[position.getX()][position.getY()] = new Queen(playerType);
                 break;
             case ROOK:
-                board.get(position.getX()).set(position.getY(), new Rook(playerType));
+                board[position.getX()][position.getY()] = new Rook(playerType);
                 break;
             case BISHOP:
-                board.get(position.getX()).set(position.getY(), new Bishop(playerType));
+                board[position.getX()][position.getY()] = new Bishop(playerType);
                 break;
             case KNIGHT:
-                board.get(position.getX()).set(position.getY(), new Knight(playerType));
+                board[position.getX()][position.getY()] = new Knight(playerType);
                 break;
             default:
-                board.get(position.getX()).set(position.getY(), NonePiece.create());
+                board[position.getX()][position.getY()] = NonePiece.create();
                 break;
         }
     }
@@ -112,20 +114,20 @@ public final class ChessBoard {
     /* 기물놓기 */
     void setPiece(Piece piece, Position targetPosition) {
         Position position = getPosition(piece);
-        board.get(position.getX()).set(position.getY(), NonePiece.create());
-        board.get(targetPosition.getX()).set(targetPosition.getY(), piece);
+        board[position.getX()][position.getY()] = NonePiece.create();
+        board[targetPosition.getX()][targetPosition.getY()] = piece;
     }
 
     /* 기물삭제 */
     void deletePiece(Piece piece) {
         Position position = getPosition(piece);
-        board.get(position.getX()).set(position.getY(), NonePiece.create());
+        board[position.getX()][position.getY()] = NonePiece.create();
     }
 
     /* 기물위치가져오기 */
     Position getPosition(Piece piece) {
-        for(int i=0; i<board.size(); i++) {
-            for(int j=0; j<board.get(i).size(); j++) {
+        for(int i=0; i<board.length; i++) {
+            for(int j=0; j<board[0].length; j++) {
                 Piece searchPiece = getPiece(Position.of(i, j));
 
                 if(piece == searchPiece) {
@@ -134,12 +136,12 @@ public final class ChessBoard {
             }
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("위치를 찾을 수 없습니다.");
     }
 
     /* 유효한 위치값인지 확인 */
     boolean validPiecePosition(Position position) {
-        return (0 <= position.getX() && position.getX() < MAX_NUM_OF_LINE) && (0 <= position.getY() && position.getY() < MAX_NUM_OF_LINE);
+        return (0 <= position.getX() && position.getX() <= 7) && (0 <= position.getY() && position.getY() <= 7);
     }
 
     /* 해당 범위에 아무것도 없는지 확인 */

@@ -1,6 +1,6 @@
 package com.chess.game;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.chess.game.PieceStatus.*;
@@ -12,9 +12,14 @@ import static java.lang.Math.*;
 public final class ChessRule implements Rule {
 
     private final ChessGameNotation chessGameNotation;
+    private int turn;
 
     public ChessRule(ChessGameNotation chessGameNotation) {
         this.chessGameNotation = chessGameNotation;
+    }
+
+    public int getTurn() {
+        return turn;
     }
 
     @Override
@@ -68,7 +73,7 @@ public final class ChessRule implements Rule {
     }
 
     private boolean isOnlyKing(PlayerType playerType, ChessBoard board) {
-        List<Piece> pieces = new LinkedList<>();
+        List<Piece> pieces = new ArrayList<>();
         pieces.addAll(board.getPlayerPieces(playerType));
         pieces.addAll(board.getPlayerPieces(getEnemyPlayerType(playerType)));
 
@@ -76,7 +81,7 @@ public final class ChessRule implements Rule {
     }
 
     private boolean isOnlyKingAndBishopOrKnight(PlayerType playerType, ChessBoard board) {
-        List<Piece> pieces = new LinkedList<>();
+        List<Piece> pieces = new ArrayList<>();
         pieces.addAll(board.getPlayerPieces(playerType));
         pieces.addAll(board.getPlayerPieces(getEnemyPlayerType(playerType)));
 
@@ -90,8 +95,8 @@ public final class ChessRule implements Rule {
     }
 
     private boolean isOnlyKingAndBishopIsSameColor(PlayerType playerType, ChessBoard board) {
-        List<Bishop> bishops = new LinkedList<>();
-        List<Piece> pieces = new LinkedList<>();
+        List<Bishop> bishops = new ArrayList<>();
+        List<Piece> pieces = new ArrayList<>();
         pieces.addAll(board.getPlayerPieces(playerType));
         pieces.addAll(board.getPlayerPieces(getEnemyPlayerType(playerType)));
 
