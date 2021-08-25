@@ -141,7 +141,7 @@ public final class ChessBoard {
 
     /* 유효한 위치값인지 확인 */
     boolean validPiecePosition(Position position) {
-        return (0 <= position.getX() && position.getX() <= 7) && (0 <= position.getY() && position.getY() <= 7);
+        return (0 <= position.getX() && position.getX() < MAX_NUM_OF_LINE) && (0 <= position.getY() && position.getY() < MAX_NUM_OF_LINE);
     }
 
     /* 해당 범위에 아무것도 없는지 확인 */

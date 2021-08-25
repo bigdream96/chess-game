@@ -21,22 +21,22 @@ final class King extends AbstractPiece {
 
     @Override
     boolean checkPieceRange(ChessBoard board, Position position, Position targetPosition) {
-        int lineDiff = abs(targetPosition.getX() - position.getX());
-        int diagonalDiff = abs(targetPosition.getY() - position.getY());
-        boolean isRange = (0 <= lineDiff && lineDiff <= 1) && (0 <= diagonalDiff && diagonalDiff <= 1);
+        int xDiff = abs(targetPosition.getX() - position.getX());
+        int yDiff = abs(targetPosition.getY() - position.getY());
+        boolean isRange = (0 <= xDiff && xDiff <= 1) && (0 <= yDiff && yDiff <= 1);
         return isRange || checkCastling(board, position, targetPosition);
     }
 
     @Override
     PieceStatus logic(ChessBoard board, Position position, Position targetPosition) {
-        int diagonalDiff = targetPosition.getY() - position.getY();
+        int yDiff = targetPosition.getY() - position.getY();
 
         if(checkCastling(board, position, targetPosition)) {
-            Position rookPosition = Position.of(position.getX(), position.getY()+(diagonalDiff > 0 ? 3 : -4));
+            Position rookPosition = Position.of(position.getX(), position.getY()+(yDiff > 0 ? 3 : -4));
             Rook rook = (Rook)board.getPiece(rookPosition);
 
-            board.setPiece(rook, Position.of(rookPosition.getX(), rookPosition.getY()+(diagonalDiff > 0 ? -2 : 3)));
-            board.setPiece(this, Position.of(position.getX(), position.getY()+(diagonalDiff > 0 ? 2 : -2)));
+            board.setPiece(rook, Position.of(rookPosition.getX(), rookPosition.getY()+(yDiff > 0 ? -2 : 3)));
+            board.setPiece(this, Position.of(position.getX(), position.getY()+(yDiff > 0 ? 2 : -2)));
 
             return CASTLING;
         }
@@ -53,22 +53,22 @@ final class King extends AbstractPiece {
     }
 
     boolean checkCastling(ChessBoard board, Position position, Position targetPosition) {
-        int diagonalDiff = targetPosition.getY() - position.getY();
+        int yDiff = targetPosition.getY() - position.getY();
 
         if(isInitPosition()
         && targetPosition.getX() == position.getX()
         && !isCheck(board)
         && !board.rangeAttackPossible(getEnemyPlayerType(getPlayerType()), position, targetPosition)
-        && abs(diagonalDiff) == 2) {
-            Position rookPosition = Position.of(position.getX(), position.getY()+(diagonalDiff > 0 ? 3 : -4));
+        && abs(yDiff) == 2) {
+            Position rookPosition = Position.of(position.getX(), position.getY()+(yDiff > 0 ? 3 : -4));
             Piece p = board.getPiece(rookPosition);
 
             if(p.getPieceType() == ROOK) {
                 Rook rook = (Rook)p;
 
                 return rook.isInitPosition()
-                    && board.rangeEmpty(Position.of(position.getX(), position.getY() + (diagonalDiff > 0 ? 1 : -3)),
-                                        Position.of(position.getX(), position.getY() + (diagonalDiff > 0 ? 2 : -1)));
+                    && board.rangeEmpty(Position.of(position.getX(), position.getY() + (yDiff > 0 ? 1 : -3)),
+                                        Position.of(position.getX(), position.getY() + (yDiff > 0 ? 2 : -1)));
             }
         }
 

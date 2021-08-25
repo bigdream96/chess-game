@@ -63,32 +63,32 @@ final class Queen extends AbstractPiece {
         int y = position.getY();
         int targetX = targetPosition.getX();
         int targetY = targetPosition.getY();
-        int lineDiff = targetX - x;
-        int diagonalDiff = targetY - y;
-        int lineDiffAndDiagonalDiff = lineDiff + diagonalDiff;
+        int xDiff = targetX - x;
+        int yDiff = targetY - y;
+        int xDiffAndYDiff = xDiff + yDiff;
 
-        if(lineDiffAndDiagonalDiff == 0) {
-            if(lineDiff > diagonalDiff) {
-                for(int i=1; i<lineDiff; i++) {
+        if(xDiffAndYDiff == 0) {
+            if(xDiff > yDiff) {
+                for(int i=1; i<xDiff; i++) {
                     if(board.getPiece(Position.of(x + i, y - i)) instanceof AbstractPiece) {
                         return false;
                     }
                 }
             } else {
-                for(int i=1; i<diagonalDiff; i++) {
+                for(int i=1; i<yDiff; i++) {
                     if(board.getPiece(Position.of(x - i, y + i)) instanceof AbstractPiece) {
                         return false;
                     }
                 }
             }
-        } else if(lineDiffAndDiagonalDiff > 0) {
-            for(int i=1; i<lineDiff; i++) {
+        } else if(xDiffAndYDiff > 0) {
+            for(int i=1; i<xDiff; i++) {
                 if(board.getPiece(Position.of(x + i, y + i)) instanceof AbstractPiece) {
                     return false;
                 }
             }
         } else {
-            for(int i=1; i<abs(lineDiff); i++) {
+            for(int i=1; i<abs(xDiff); i++) {
                 if(board.getPiece(Position.of(x - i, y - i)) instanceof AbstractPiece) {
                     return false;
                 }
