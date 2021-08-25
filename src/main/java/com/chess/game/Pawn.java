@@ -37,16 +37,16 @@ final class Pawn extends AbstractPiece {
                 if(abs(lineDiff) == 2) {
                     Position middlePosition = Position.of(position.getX()+(lineDiff > 0 ? 1 : -1), position.getY());
                     Piece middlePiece = board.getPiece(middlePosition);
-                    return (targetPiece instanceof NonePiece) && (middlePiece instanceof NonePiece);
+                    return (targetPiece instanceof NullPiece) && (middlePiece instanceof NullPiece);
                 } else {
-                    return (targetPiece instanceof NonePiece) && (abs(lineDiff) == 1);
+                    return (targetPiece instanceof NullPiece) && (abs(lineDiff) == 1);
                 }
             } else {
-                return (targetPiece instanceof NonePiece) && (abs(lineDiff) == 1);
+                return (targetPiece instanceof NullPiece) && (abs(lineDiff) == 1);
             }
         } else {
             if(checkEnPassant(board, position, targetPosition)) {
-                return (targetPiece instanceof NonePiece) && (abs(lineDiff) == 1);
+                return (targetPiece instanceof NullPiece) && (abs(lineDiff) == 1);
             } else {
                 return (targetPiece instanceof AbstractPiece) && (abs(lineDiff) == 1) && (abs(diagonalDiff) == 1);
             }
@@ -72,7 +72,7 @@ final class Pawn extends AbstractPiece {
         if(isInitPosition()) initPosition = false;
         prevPosition = Position.copy(position);
 
-        return board.getPiece(targetPosition) instanceof NonePiece ? ONE_MOVE : TAKES;
+        return board.getPiece(targetPosition) instanceof NullPiece ? ONE_MOVE : TAKES;
     }
 
     @Override

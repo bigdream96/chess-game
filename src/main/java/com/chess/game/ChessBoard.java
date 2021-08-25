@@ -33,7 +33,7 @@ public final class ChessBoard {
             }
         }
 
-        return NonePiece.create();
+        return NullPiece.create();
     }
 
     /* 특정범위 기물리스트 검색하기 */
@@ -76,7 +76,7 @@ public final class ChessBoard {
             && piece.getPieceType() == pieceType)
                 return piece;
 
-        return NonePiece.create();
+        return NullPiece.create();
     }
 
     /* 기물있는지 확인하기 */
@@ -106,7 +106,7 @@ public final class ChessBoard {
                 board[position.getX()][position.getY()] = new Knight(playerType);
                 break;
             default:
-                board[position.getX()][position.getY()] = NonePiece.create();
+                board[position.getX()][position.getY()] = NullPiece.create();
                 break;
         }
     }
@@ -114,14 +114,14 @@ public final class ChessBoard {
     /* 기물놓기 */
     void setPiece(Piece piece, Position targetPosition) {
         Position position = getPosition(piece);
-        board[position.getX()][position.getY()] = NonePiece.create();
+        board[position.getX()][position.getY()] = NullPiece.create();
         board[targetPosition.getX()][targetPosition.getY()] = piece;
     }
 
     /* 기물삭제 */
     void deletePiece(Piece piece) {
         Position position = getPosition(piece);
-        board[position.getX()][position.getY()] = NonePiece.create();
+        board[position.getX()][position.getY()] = NullPiece.create();
     }
 
     /* 기물위치가져오기 */

@@ -56,7 +56,7 @@ final class Bishop extends AbstractPiece {
     @Override
     PieceStatus logic(ChessBoard board, Position position, Position targetPosition) {
         board.setPiece(this, targetPosition);
-        return board.getPiece(targetPosition) instanceof NonePiece ? ONE_MOVE : TAKES;
+        return board.getPiece(targetPosition) instanceof NullPiece ? ONE_MOVE : TAKES;
     }
 
     @Override

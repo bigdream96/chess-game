@@ -1,9 +1,5 @@
 package com.chess.game;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.chess.game.ChessBoard.*;
 import static com.chess.game.ChessBoard.getMaxNumOfLine;
 import static com.chess.game.PlayerType.*;
 
@@ -79,7 +75,7 @@ public final class ChessBoardSetting {
         Piece[] pieces = new Piece[getMaxNumOfLine()];
 
         for(int i=0; i<pieces.length; i++) {
-            pieces[i] = new NonePiece();
+            pieces[i] = new NullPiece();
         }
 
         return pieces;
