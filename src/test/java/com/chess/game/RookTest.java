@@ -33,26 +33,6 @@ class RookTest {
     }
 
     @Test
-    @DisplayName("잘못된이동")
-    void invalid_move_rook() {
-        Piece rook = chessBoard.getPiece(Position.of(7, 7));
-
-        // 보드판의 범위를 벗어났을 때
-        rook.move(chessBoard, WHITE, Position.of(7, 7), Position.of(8, 8));
-
-        // 자기 자신의 기물이 목표위치일 때
-        rook.move(chessBoard, WHITE, Position.of(7, 7), Position.of(7, 0));
-
-        // 룩 이동범위에 다른 기물이 있는 경우
-        rook.move(chessBoard, WHITE, Position.of(7, 7), Position.of(5, 7));
-
-        // 동일 플레이어의 기물을 공격한 경우
-        rook.move(chessBoard, WHITE, Position.of(7,7), Position.of(6, 7));
-
-        assertEquals(rook, chessBoard.getPiece(Position.of(7, 7)));
-    }
-
-    @Test
     @DisplayName("보드판_범위를 벗어난_경우")
     void out_of_board_range() {
         Piece rook = chessBoard.getPiece(Position.of(7, 7));

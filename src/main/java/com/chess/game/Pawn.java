@@ -24,31 +24,31 @@ final class Pawn extends AbstractPiece {
     @Override
     boolean checkPieceRange(ChessBoard board, Position position, Position targetPosition) {
         Piece targetPiece = board.getPiece(targetPosition);
-        int lineDiff = targetPosition.getX() - position.getX();
-        int diagonalDiff = targetPosition.getY() - position.getY();
+        int xDiff = targetPosition.getX() - position.getX();
+        int yDiff = targetPosition.getY() - position.getY();
 
-        if(getPlayerType() == WHITE && lineDiff > 0)
+        if(getPlayerType() == WHITE && xDiff > 0)
             return false;
-        else if(getPlayerType() == BLACK && lineDiff < 0)
+        else if(getPlayerType() == BLACK && xDiff < 0)
             return false;
 
-        if(abs(diagonalDiff) == 0) {
+        if(abs(yDiff) == 0) {
             if(isInitPosition()) {
-                if(abs(lineDiff) == 2) {
-                    Position middlePosition = Position.of(position.getX()+(lineDiff > 0 ? 1 : -1), position.getY());
+                if(abs(xDiff) == 2) {
+                    Position middlePosition = Position.of(position.getX()+(xDiff > 0 ? 1 : -1), position.getY());
                     Piece middlePiece = board.getPiece(middlePosition);
                     return (targetPiece instanceof NullPiece) && (middlePiece instanceof NullPiece);
                 } else {
-                    return (targetPiece instanceof NullPiece) && (abs(lineDiff) == 1);
+                    return (targetPiece instanceof NullPiece) && (abs(xDiff) == 1);
                 }
             } else {
-                return (targetPiece instanceof NullPiece) && (abs(lineDiff) == 1);
+                return (targetPiece instanceof NullPiece) && (abs(xDiff) == 1);
             }
         } else {
             if(checkEnPassant(board, position, targetPosition)) {
-                return (targetPiece instanceof NullPiece) && (abs(lineDiff) == 1);
+                return (targetPiece instanceof NullPiece) && (abs(xDiff) == 1);
             } else {
-                return (targetPiece instanceof AbstractPiece) && (abs(lineDiff) == 1) && (abs(diagonalDiff) == 1);
+                return (targetPiece instanceof AbstractPiece) && (abs(xDiff) == 1) && (abs(yDiff) == 1);
             }
         }
     }
@@ -79,10 +79,10 @@ final class Pawn extends AbstractPiece {
     boolean isPossibleAttack(ChessBoard board, Position position, Position targetPosition) {
         if(checkPieceRange(board, position, targetPosition)) {
             Piece targetPiece = board.getPiece(targetPosition);
-            int lineDiff = targetPosition.getX() - position.getX();
-            int diagonalDiff = targetPosition.getY() - position.getY();
+            int xDiff = targetPosition.getX() - position.getX();
+            int yDiff = targetPosition.getY() - position.getY();
 
-            return abs(lineDiff) == 1 && abs(diagonalDiff) == 1 && targetPiece instanceof AbstractPiece;
+            return abs(xDiff) == 1 && abs(yDiff) == 1 && targetPiece instanceof AbstractPiece;
         }
 
         return false;

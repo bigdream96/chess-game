@@ -68,29 +68,6 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("잘못된이동")
-    void invalid_move_pawn() {
-        Piece pawn = chessBoard.getPiece(Position.of(6, 0));
-        Piece knight = chessBoard.getPiece(Position.of(7, 1));
-
-        knight.move(chessBoard, WHITE, Position.of(7, 1), Position.of(5, 0));
-
-        // 보드판 범위를 벗어난 경우
-        pawn.move(chessBoard, WHITE, Position.of(6, 0), Position.of(6, -1));
-
-        // 가는 길 중간에 기물이 있는 경우
-        pawn.move(chessBoard, WHITE, Position.of(6, 0), Position.of(4, 0));
-
-        // 같은 위치로 이동한 경우
-        pawn.move(chessBoard, WHITE, Position.of(6, 0), Position.of(6, 0));
-
-        // 동일 플레이어의 기물을 공격한 경우
-        pawn.move(chessBoard, WHITE, Position.of(6, 0), Position.of(5, 0));
-
-        assertEquals(pawn, chessBoard.getPiece(Position.of(6, 0)));
-    }
-
-    @Test
     @DisplayName("보드판_범위를 벗어난_경우")
     void out_of_board_range() {
         Piece pawn = chessBoard.getPiece(Position.of(6, 0));

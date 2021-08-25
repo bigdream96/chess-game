@@ -12,14 +12,9 @@ import static java.lang.Math.*;
 public final class ChessRule implements Rule {
 
     private final ChessGameNotation chessGameNotation;
-    private int turn;
 
     public ChessRule(ChessGameNotation chessGameNotation) {
         this.chessGameNotation = chessGameNotation;
-    }
-
-    public int getTurn() {
-        return turn;
     }
 
     @Override
