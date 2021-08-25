@@ -64,12 +64,12 @@ ChessBoardSetting객체는 체스판에 필요한 요소를 생성하고 게임 
 적절한 초기위치에 배치합니다.
 
 #### Piece
-![체스기물설계](https://user-images.githubusercontent.com/35022991/124468974-ba19f280-ddd4-11eb-82ba-c76b45db84b9.PNG)
+![체스게임설계-기물클래스설계](https://user-images.githubusercontent.com/35022991/130714251-18f076d1-5f40-4c7c-9796-9ca565d3ac54.png)
 
 기물 고유의 행마법에 따라 움직입니다. 최상위에는 Piece인터페이스를 정의하였습니다.
 
 "기물없음"을 단순히 null로 표현하기보다는 별도의 오브젝트로 표현하는 게 나을 것 같아서
-NonePiece클래스를 만들었습니다.
+NullPiece클래스를 만들었습니다.
 
 모든 기물의 공통적인 특징을 모아서 AbstractPiece라는 추상클래스를 정의하고,
 모든 기물이 해당클래스를 확장해서 구현했습니다. 외부에서 move메서드를 사용해서
@@ -94,8 +94,6 @@ Junit를 사용해 체스게임 주요객체에 대한 단위테스트를 진행
 * 폰의 프로모션과 앙파상
 * 체크메이트
 * 무승부(스테일메이트, 50수 규칙, 3회 동형반복 등)
-
-![체스게임_단위테스트결과](https://user-images.githubusercontent.com/35022991/125237765-322a7000-e321-11eb-8de2-2be6433bbe0f.PNG)
 
 <hr/>
 
