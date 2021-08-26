@@ -20,10 +20,10 @@ public final class ChessRule implements Rule {
     @Override
     public GameResult judge(PlayerType playerType, ChessBoard board, Piece piece, PieceStatus pieceStatus) {
         if (pieceStatus == INVALID_MOVE)
-            return GameResult.of(playerType, piece.getPieceType(), board.getPosition(piece), AGAIN);
+            return GameResult.of(playerType, piece.getPieceType(), board.searchPosition(piece), AGAIN);
 
         GameStatus gameStatus;
-        King enemyKing = (King)board.getPlayerPiece(getEnemyPlayerType(playerType), KING);
+        King enemyKing = (King)board.searchPlayerKing(getEnemyPlayerType(playerType));
 
         if(pieceStatus == PROMOTION)
             gameStatus = PAWN_PROMOTION;
@@ -35,14 +35,14 @@ public final class ChessRule implements Rule {
             gameStatus = LACK_OF_CHESS_PIECES;
         else if(checkFiftyMoveRule(playerType))
             gameStatus = FIFTY_MOVE_RULE;
-        else if(checkThreeIsomorphicRepetitions(playerType, NotationItem.of(piece, board.getPosition(piece), pieceStatus)))
+        else if(checkThreeIsomorphicRepetitions(playerType, NotationItem.of(piece, board.searchPosition(piece), pieceStatus)))
             gameStatus = THREE_ISOMORPHIC_REPETITIONS;
         else
             gameStatus = CONTINUE;
 
-        chessGameNotation.add(playerType, NotationItem.of(piece, board.getPosition(piece), pieceStatus));
+        chessGameNotation.add(playerType, NotationItem.of(piece, board.searchPosition(piece), pieceStatus));
 
-        return GameResult.of(playerType, piece.getPieceType(), board.getPosition(piece), gameStatus);
+        return GameResult.of(playerType, piece.getPieceType(), board.searchPosition(piece), gameStatus);
     }
 
     private boolean checkFiftyMoveRule(PlayerType playerType) {
@@ -69,16 +69,16 @@ public final class ChessRule implements Rule {
 
     private boolean isOnlyKing(PlayerType playerType, ChessBoard board) {
         List<Piece> pieces = new ArrayList<>();
-        pieces.addAll(board.getPlayerPieces(playerType));
-        pieces.addAll(board.getPlayerPieces(getEnemyPlayerType(playerType)));
+        pieces.addAll(board.searchPlayerPieces(playerType));
+        pieces.addAll(board.searchPlayerPieces(getEnemyPlayerType(playerType)));
 
         return (pieces.size() == 2) && board.containsPiece(WHITE, KING) && board.containsPiece(BLACK, KING);
     }
 
     private boolean isOnlyKingAndBishopOrKnight(PlayerType playerType, ChessBoard board) {
         List<Piece> pieces = new ArrayList<>();
-        pieces.addAll(board.getPlayerPieces(playerType));
-        pieces.addAll(board.getPlayerPieces(getEnemyPlayerType(playerType)));
+        pieces.addAll(board.searchPlayerPieces(playerType));
+        pieces.addAll(board.searchPlayerPieces(getEnemyPlayerType(playerType)));
 
         for(Piece piece : pieces) {
             if(piece.getPieceType() == BISHOP || piece.getPieceType() == KNIGHT) {
@@ -92,8 +92,8 @@ public final class ChessRule implements Rule {
     private boolean isOnlyKingAndBishopIsSameColor(PlayerType playerType, ChessBoard board) {
         List<Bishop> bishops = new ArrayList<>();
         List<Piece> pieces = new ArrayList<>();
-        pieces.addAll(board.getPlayerPieces(playerType));
-        pieces.addAll(board.getPlayerPieces(getEnemyPlayerType(playerType)));
+        pieces.addAll(board.searchPlayerPieces(playerType));
+        pieces.addAll(board.searchPlayerPieces(getEnemyPlayerType(playerType)));
 
         if(pieces.size() != 4)
             return false;
@@ -107,8 +107,8 @@ public final class ChessRule implements Rule {
         if(bishops.size() != 2)
             return false;
 
-        int n1 = abs(board.getPosition(bishops.get(0)).getX() + board.getPosition(bishops.get(0)).getY());
-        int n2 = abs(board.getPosition(bishops.get(1)).getX() + board.getPosition(bishops.get(1)).getY());
+        int n1 = abs(board.searchPosition(bishops.get(0)).getX() + board.searchPosition(bishops.get(0)).getY());
+        int n2 = abs(board.searchPosition(bishops.get(1)).getX() + board.searchPosition(bishops.get(1)).getY());
 
         return (n1 % 2 == 0 && n2 % 2 == 0) || (n1 % 2 == 1 && n2 % 2 == 1);
     }

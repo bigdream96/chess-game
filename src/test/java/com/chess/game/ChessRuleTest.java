@@ -24,18 +24,18 @@ class ChessRuleTest {
     @BeforeEach
     void init() {
         chessBoardSetting = new ChessBoardSetting();
-        chessBoard = new ChessBoard(new ChessRule(new ChessGameNotation()), chessBoardSetting.create());
+        chessBoard = new ChessBoard(new ChessRule(new ChessGameNotation()), new ChessBoardSetting(), new ChessPromotionManager());
         chessRule = new ChessRule(new ChessGameNotation());
     }
 
     @Test
     @DisplayName("체크메이트")
     void checkmate_king() {
-        King whiteKing = (King)chessBoard.getPiece(Position.of(7, 4));
-        Pawn whitePawn1 = (Pawn)chessBoard.getPiece(Position.of(6, 5));
-        Pawn whitePawn2 = (Pawn)chessBoard.getPiece(Position.of(6, 6));
-        Pawn blackPawn = (Pawn)chessBoard.getPiece(Position.of(1, 4));
-        Queen blackQueen = (Queen)chessBoard.getPiece(Position.of(0, 3));
+        King whiteKing = (King)chessBoard.searchPiece(Position.of(7, 4));
+        Pawn whitePawn1 = (Pawn)chessBoard.searchPiece(Position.of(6, 5));
+        Pawn whitePawn2 = (Pawn)chessBoard.searchPiece(Position.of(6, 6));
+        Pawn blackPawn = (Pawn)chessBoard.searchPiece(Position.of(1, 4));
+        Queen blackQueen = (Queen)chessBoard.searchPiece(Position.of(0, 3));
 
         whitePawn1.move(chessBoard, WHITE, Position.of(6, 5), Position.of(5, 5));
         blackPawn.move(chessBoard, BLACK, Position.of(1, 4), Position.of(3, 4));
@@ -48,8 +48,8 @@ class ChessRuleTest {
     @Test
     @DisplayName("스테일메이트")
     void stalemate_king() {
-        List<AbstractPiece> blackPieces = chessBoard.getPlayerPieces(BLACK);
-        List<AbstractPiece> whitePieces = chessBoard.getPlayerPieces(WHITE);
+        List<AbstractPiece> blackPieces = chessBoard.searchPlayerPieces(BLACK);
+        List<AbstractPiece> whitePieces = chessBoard.searchPlayerPieces(WHITE);
 
         for(AbstractPiece blackPiece : blackPieces) {
             if(blackPiece.getPieceType() != KING && blackPiece.getPieceType() != QUEEN) {
@@ -63,8 +63,8 @@ class ChessRuleTest {
             }
         }
 
-        King whiteKing = (King)chessBoard.getPiece(Position.of(7, 4));
-        Queen blackQueen = (Queen)chessBoard.getPiece(Position.of(0, 3));
+        King whiteKing = (King)chessBoard.searchPiece(Position.of(7, 4));
+        Queen blackQueen = (Queen)chessBoard.searchPiece(Position.of(0, 3));
 
         whiteKing.move(chessBoard, WHITE, Position.of(7, 3), Position.of(7, 4));
         whiteKing.move(chessBoard, WHITE, Position.of(7, 4), Position.of(7, 5));
@@ -79,8 +79,8 @@ class ChessRuleTest {
     @Test
     @DisplayName("킹만_남은경우")
     void only_king() {
-        List<AbstractPiece> blackPieces = chessBoard.getPlayerPieces(BLACK);
-        List<AbstractPiece> whitePieces = chessBoard.getPlayerPieces(WHITE);
+        List<AbstractPiece> blackPieces = chessBoard.searchPlayerPieces(BLACK);
+        List<AbstractPiece> whitePieces = chessBoard.searchPlayerPieces(WHITE);
 
         for(AbstractPiece blackPiece : blackPieces) {
             if(blackPiece.getPieceType() != KING) {
@@ -94,7 +94,7 @@ class ChessRuleTest {
             }
         }
 
-        GameResult result = chessRule.judge(WHITE, chessBoard, chessBoard.getPlayerPiece(WHITE, KING), ONE_MOVE);
+        GameResult result = chessRule.judge(WHITE, chessBoard, chessBoard.searchPlayerKing(WHITE), ONE_MOVE);
 
         assertEquals(LACK_OF_CHESS_PIECES, result.getGameStatus());
     }
@@ -102,8 +102,8 @@ class ChessRuleTest {
     @Test
     @DisplayName("킹과_나이트가_남은경우")
     void is_only_king_and_knight() {
-        List<AbstractPiece> blackPieces = chessBoard.getPlayerPieces(BLACK);
-        List<AbstractPiece> whitePieces = chessBoard.getPlayerPieces(WHITE);
+        List<AbstractPiece> blackPieces = chessBoard.searchPlayerPieces(BLACK);
+        List<AbstractPiece> whitePieces = chessBoard.searchPlayerPieces(WHITE);
         List<Knight> whiteKnights = new ArrayList<>();
 
         // 블랙 킹만 남기기
@@ -127,7 +127,7 @@ class ChessRuleTest {
         // 화이트 나이트 1개 삭제
         chessBoard.deletePiece(whiteKnights.get(0));
 
-        GameResult result = chessRule.judge(WHITE, chessBoard, chessBoard.getPlayerPiece(WHITE, KING), ONE_MOVE);
+        GameResult result = chessRule.judge(WHITE, chessBoard, chessBoard.searchPlayerKing(WHITE), ONE_MOVE);
 
         assertEquals(LACK_OF_CHESS_PIECES, result.getGameStatus());
     }
@@ -135,8 +135,8 @@ class ChessRuleTest {
     @Test
     @DisplayName("킹과_비숍이_남은경우")
     void is_only_king_and_bishop() {
-        List<AbstractPiece> blackPieces = chessBoard.getPlayerPieces(BLACK);
-        List<AbstractPiece> whitePieces = chessBoard.getPlayerPieces(WHITE);
+        List<AbstractPiece> blackPieces = chessBoard.searchPlayerPieces(BLACK);
+        List<AbstractPiece> whitePieces = chessBoard.searchPlayerPieces(WHITE);
         List<Bishop> whiteBishops = new ArrayList<>();
 
         // 블랙 킹만 남기기
@@ -160,7 +160,7 @@ class ChessRuleTest {
         // 화이트 나이트 1개 삭제
         chessBoard.deletePiece(whiteBishops.get(0));
 
-        GameResult result = chessRule.judge(WHITE, chessBoard, chessBoard.getPlayerPiece(WHITE, KING), ONE_MOVE);
+        GameResult result = chessRule.judge(WHITE, chessBoard, chessBoard.searchPlayerKing(WHITE), ONE_MOVE);
 
         assertEquals(LACK_OF_CHESS_PIECES, result.getGameStatus());
     }
@@ -168,8 +168,8 @@ class ChessRuleTest {
     @Test
     @DisplayName("킹과_비숍이_남고_양측의_비숍이_같은_색인_경우")
     void is_only_king_and_bishop_is_same_color() {
-        List<AbstractPiece> blackPieces = chessBoard.getPlayerPieces(BLACK);
-        List<AbstractPiece> whitePieces = chessBoard.getPlayerPieces(WHITE);
+        List<AbstractPiece> blackPieces = chessBoard.searchPlayerPieces(BLACK);
+        List<AbstractPiece> whitePieces = chessBoard.searchPlayerPieces(WHITE);
         List<Bishop> blackBishops = new ArrayList<>();
         List<Bishop> whiteBishops = new ArrayList<>();
 
@@ -199,7 +199,7 @@ class ChessRuleTest {
         chessBoard.deletePiece(blackBishops.get(0));
         chessBoard.deletePiece(whiteBishops.get(1));
 
-        GameResult result = chessRule.judge(WHITE, chessBoard, chessBoard.getPlayerPiece(WHITE, KING), ONE_MOVE);
+        GameResult result = chessRule.judge(WHITE, chessBoard, chessBoard.searchPlayerKing(WHITE), ONE_MOVE);
 
         assertEquals(LACK_OF_CHESS_PIECES, result.getGameStatus());
     }
@@ -208,10 +208,10 @@ class ChessRuleTest {
     @DisplayName("50수_규칙")
     void fifty_move_rule() {
         for(int i=0; i<50; i++) {
-            chessRule.judge(WHITE, chessBoard, chessBoard.getPlayerPiece(WHITE, KING), ONE_MOVE);
+            chessRule.judge(WHITE, chessBoard, chessBoard.searchPlayerKing(WHITE), ONE_MOVE);
         }
 
-        GameResult result = chessRule.judge(WHITE, chessBoard, chessBoard.getPlayerPiece(WHITE, KING), ONE_MOVE);
+        GameResult result = chessRule.judge(WHITE, chessBoard, chessBoard.searchPlayerKing(WHITE), ONE_MOVE);
 
         assertEquals(FIFTY_MOVE_RULE, result.getGameStatus());
     }
@@ -219,7 +219,7 @@ class ChessRuleTest {
     @Test
     @DisplayName("3회_동형반복")
     void Three_isomorphic_repetitions_of_chess() {
-        Knight knight = (Knight)chessBoard.getPiece(Position.of(7, 1));
+        Knight knight = (Knight)chessBoard.searchPiece(Position.of(7, 1));
         chessBoard.put(WHITE, KNIGHT, Position.of(7, 1), Position.of(5, 0));
         chessBoard.put(WHITE, KNIGHT, Position.of(5, 0), Position.of(7, 1));
         chessBoard.put(WHITE, KNIGHT, Position.of(7, 1), Position.of(5, 0));

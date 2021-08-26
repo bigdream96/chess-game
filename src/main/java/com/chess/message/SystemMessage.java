@@ -56,7 +56,11 @@ public final class SystemMessage {
 
         for(int i = 0; i< board.length; i++) {
             for(int j = 0; j< board[0].length; j++) {
-                strBoard[i][j] = board[i][j].getPieceType() + "," + board[i][j].getPlayerType();
+                StringBuffer buffer = new StringBuffer();
+                buffer.append(board[i][j].getPieceType());
+                buffer.append(",");
+                buffer.append(board[i][j].getPlayerType());
+                strBoard[i][j] = buffer.toString();
             }
         }
 

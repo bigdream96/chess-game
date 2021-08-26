@@ -33,7 +33,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Game</mainClass>
+                            <mainClass>com.chess.Game</mainClass>
                             <addClasspath>true</addClasspath>
                             <addExtensions>true</addExtensions>
                         </manifest>

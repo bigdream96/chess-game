@@ -39,7 +39,7 @@ public final class HumanPlayer implements Player {
                     break;
                 case PAWN_PROMOTION:
                     UserMessage promotionMessage = ui.input(SystemMessage.of(chessBoard, playerType, status, result.getPieceType(), result.getPosition()));
-                    chessBoard.promotePiece(playerType, promotionMessage.getPieceType(), promotionMessage.getPosition());
+                    chessBoard.promote(playerType, promotionMessage.getPieceType(), promotionMessage.getPosition());
                     ui.output(SystemMessage.of(chessBoard, playerType, status));
                     b = false;
                     break;

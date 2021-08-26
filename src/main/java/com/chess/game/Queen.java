@@ -24,7 +24,7 @@ final class Queen extends AbstractPiece {
     @Override
     PieceStatus logic(ChessBoard board, Position position, Position targetPosition) {
         board.setPiece(this, targetPosition);
-        return board.getPiece(targetPosition) instanceof NullPiece ? ONE_MOVE : TAKES;
+        return board.searchPiece(targetPosition) instanceof NullPiece ? ONE_MOVE : TAKES;
     }
 
     @Override
@@ -37,19 +37,19 @@ final class Queen extends AbstractPiece {
 
         if(position.getX() == targetPosition.getX())
             if(position.getY() > targetPosition.getY())
-                pieces = board.getPieces(targetPosition, position);
+                pieces = board.searchPieces(targetPosition, position);
             else
-                pieces = board.getPieces(position, targetPosition);
+                pieces = board.searchPieces(position, targetPosition);
         else if(position.getY() == targetPosition.getY())
             if(position.getX() > targetPosition.getX())
-                pieces = board.getPieces(targetPosition, position);
+                pieces = board.searchPieces(targetPosition, position);
             else
-                pieces = board.getPieces(position, targetPosition);
+                pieces = board.searchPieces(position, targetPosition);
         else
             return false;
 
-        pieces.remove(board.getPiece(position));
-        pieces.remove(board.getPiece(targetPosition));
+        pieces.remove(board.searchPiece(position));
+        pieces.remove(board.searchPiece(targetPosition));
 
         for(Piece piece : pieces)
             if(piece instanceof AbstractPiece)
@@ -70,26 +70,26 @@ final class Queen extends AbstractPiece {
         if(xDiffAndYDiff == 0) {
             if(xDiff > yDiff) {
                 for(int i=1; i<xDiff; i++) {
-                    if(board.getPiece(Position.of(x + i, y - i)) instanceof AbstractPiece) {
+                    if(board.searchPiece(Position.of(x + i, y - i)) instanceof AbstractPiece) {
                         return false;
                     }
                 }
             } else {
                 for(int i=1; i<yDiff; i++) {
-                    if(board.getPiece(Position.of(x - i, y + i)) instanceof AbstractPiece) {
+                    if(board.searchPiece(Position.of(x - i, y + i)) instanceof AbstractPiece) {
                         return false;
                     }
                 }
             }
         } else if(xDiffAndYDiff > 0) {
             for(int i=1; i<xDiff; i++) {
-                if(board.getPiece(Position.of(x + i, y + i)) instanceof AbstractPiece) {
+                if(board.searchPiece(Position.of(x + i, y + i)) instanceof AbstractPiece) {
                     return false;
                 }
             }
         } else {
             for(int i=1; i<abs(xDiff); i++) {
-                if(board.getPiece(Position.of(x - i, y - i)) instanceof AbstractPiece) {
+                if(board.searchPiece(Position.of(x - i, y - i)) instanceof AbstractPiece) {
                     return false;
                 }
             }

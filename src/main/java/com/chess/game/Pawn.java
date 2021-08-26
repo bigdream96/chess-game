@@ -23,7 +23,7 @@ final class Pawn extends AbstractPiece {
 
     @Override
     boolean checkPieceRange(ChessBoard board, Position position, Position targetPosition) {
-        Piece targetPiece = board.getPiece(targetPosition);
+        Piece targetPiece = board.searchPiece(targetPosition);
         int xDiff = targetPosition.getX() - position.getX();
         int yDiff = targetPosition.getY() - position.getY();
 
@@ -36,7 +36,7 @@ final class Pawn extends AbstractPiece {
             if(isInitPosition()) {
                 if(abs(xDiff) == 2) {
                     Position middlePosition = Position.of(position.getX()+(xDiff > 0 ? 1 : -1), position.getY());
-                    Piece middlePiece = board.getPiece(middlePosition);
+                    Piece middlePiece = board.searchPiece(middlePosition);
                     return (targetPiece instanceof NullPiece) && (middlePiece instanceof NullPiece);
                 } else {
                     return (targetPiece instanceof NullPiece) && (abs(xDiff) == 1);
@@ -61,7 +61,7 @@ final class Pawn extends AbstractPiece {
         }
 
         if(checkEnPassant(board, position, targetPosition)) {
-            Piece piece = board.getPiece(Position.of(position.getX(), targetPosition.getY()));
+            Piece piece = board.searchPiece(Position.of(position.getX(), targetPosition.getY()));
             board.deletePiece(piece);
             board.setPiece(this, targetPosition);
             return EN_PASSANT;
@@ -72,13 +72,13 @@ final class Pawn extends AbstractPiece {
         if(isInitPosition()) initPosition = false;
         prevPosition = Position.copy(position);
 
-        return board.getPiece(targetPosition) instanceof NullPiece ? ONE_MOVE : TAKES;
+        return board.searchPiece(targetPosition) instanceof NullPiece ? ONE_MOVE : TAKES;
     }
 
     @Override
     boolean isPossibleAttack(ChessBoard board, Position position, Position targetPosition) {
         if(checkPieceRange(board, position, targetPosition)) {
-            Piece targetPiece = board.getPiece(targetPosition);
+            Piece targetPiece = board.searchPiece(targetPosition);
             int xDiff = targetPosition.getX() - position.getX();
             int yDiff = targetPosition.getY() - position.getY();
 
@@ -95,11 +95,11 @@ final class Pawn extends AbstractPiece {
 
     private boolean checkEnPassant(ChessBoard board, Position position, Position targetPosition) {
         if(abs(targetPosition.getX() - position.getX()) == 1 && abs(targetPosition.getY() - position.getY()) == 1) {
-            Piece piece = board.getPiece(Position.of(position.getX(), targetPosition.getY()));
+            Piece piece = board.searchPiece(Position.of(position.getX(), targetPosition.getY()));
 
             if(piece.getPieceType() == PAWN) {
                 Pawn pawn = (Pawn)piece;
-                Position pawnPosition = board.getPosition(pawn);
+                Position pawnPosition = board.searchPosition(pawn);
 
                 return abs(pawn.getPrevPosition().getX() - pawnPosition.getX()) == 2;
             }

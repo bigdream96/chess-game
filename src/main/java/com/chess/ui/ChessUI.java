@@ -25,9 +25,9 @@ public final class ChessUI implements UI {
 
     @Override
     public synchronized void output(SystemMessage systemMessage) {
-        consoleFormatter.println();
+        System.out.println();
         consoleFormatter.print(getResultMessage(systemMessage));
-        consoleFormatter.println();
+        System.out.println();
 
         if(systemMessage.getGameStatus().equals("CHECKMATE")
         || systemMessage.getGameStatus().equals("STALEMATE"))
@@ -42,7 +42,7 @@ public final class ChessUI implements UI {
         if(systemMessage.getGameStatus().equals("PAWN_PROMOTION")) {
             return promotion(systemMessage);
         } else {
-            consoleFormatter.println();
+            System.out.println();
             consoleFormatter.print(systemMessage.getPlayerType() + " Player의 차례입니다.");
             boardPrinter.showChessBoard(systemMessage.getBoard());
 
@@ -81,7 +81,7 @@ public final class ChessUI implements UI {
                             return UserMessage.of("ABSTENTION");
                         default:
                             consoleFormatter.print(MESSAGE, "잘못된 메뉴번호입니다. 다시 입력해주세요.");
-                            consoleFormatter.println();
+                            System.out.println();
                     }
                 }
             }

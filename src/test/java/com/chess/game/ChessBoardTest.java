@@ -18,13 +18,13 @@ class ChessBoardTest {
     @BeforeEach
     void init() {
         chessBoardSetting = new ChessBoardSetting();
-        chessBoard = new ChessBoard(new ChessRule(new ChessGameNotation()), chessBoardSetting.create());
+        chessBoard = new ChessBoard(new ChessRule(new ChessGameNotation()), new ChessBoardSetting(), new ChessPromotionManager());
     }
 
     @Test
     @DisplayName("기물검색")
     void search_piece() {
-        Piece piece = chessBoard.getPiece(Position.of(1, 4));
+        Piece piece = chessBoard.searchPiece(Position.of(1, 4));
 
         assertEquals(PAWN, piece.getPieceType());
     }
@@ -32,7 +32,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("기물리스트_범위검색")
     void search_list_piece() {
-        List<Piece> pieces = chessBoard.getPieces(Position.of(6, 0), Position.of(6, 7));
+        List<Piece> pieces = chessBoard.searchPieces(Position.of(6, 0), Position.of(6, 7));
 
         assertEquals(8, pieces.size());
 
@@ -45,7 +45,7 @@ class ChessBoardTest {
     @Test
     @DisplayName("모든기물_검색")
     void search_all_pieces() {
-        List<Piece> allPieces = chessBoard.getAllPieces();
+        List<Piece> allPieces = chessBoard.searchAllPieces();
 
         assertEquals(64, allPieces.size());
     }
@@ -53,8 +53,8 @@ class ChessBoardTest {
     @Test
     @DisplayName("특정플레이어_기물리스트_검색")
     void search_player_pieces() {
-        List<AbstractPiece> whitePieces = chessBoard.getPlayerPieces(WHITE);
-        List<AbstractPiece> blackPieces = chessBoard.getPlayerPieces(BLACK);
+        List<AbstractPiece> whitePieces = chessBoard.searchPlayerPieces(WHITE);
+        List<AbstractPiece> blackPieces = chessBoard.searchPlayerPieces(BLACK);
 
         for(AbstractPiece piece : whitePieces) {
             assertEquals(WHITE, piece.getPlayerType());
@@ -68,14 +68,14 @@ class ChessBoardTest {
     @Test
     @DisplayName("기물배치")
     void put_piece() {
-        Piece befPiece = chessBoard.getPiece(Position.of(6, 0));
+        Piece befPiece = chessBoard.searchPiece(Position.of(6, 0));
 
         assertEquals(PAWN, befPiece.getPieceType());
 
         chessBoard.setPiece(befPiece, Position.of(4, 0));
 
-        Piece befPiece2 = chessBoard.getPiece(Position.of(6, 0));
-        Piece aftPiece = chessBoard.getPiece(Position.of(4, 0));
+        Piece befPiece2 = chessBoard.searchPiece(Position.of(6, 0));
+        Piece aftPiece = chessBoard.searchPiece(Position.of(4, 0));
 
         assertEquals(NONE, befPiece2.getPieceType());
         assertEquals(PAWN, aftPiece.getPieceType());
@@ -84,18 +84,18 @@ class ChessBoardTest {
     @Test
     @DisplayName("기물삭제")
     void remove_piece() {
-        Piece pawn = chessBoard.getPiece(Position.of(6, 0));
+        Piece pawn = chessBoard.searchPiece(Position.of(6, 0));
         chessBoard.deletePiece(pawn);
 
-        assertEquals(NONE, chessBoard.getPiece(Position.of(6, 0)).getPieceType());
+        assertEquals(NONE, chessBoard.searchPiece(Position.of(6, 0)).getPieceType());
     }
 
     @Test
     @DisplayName("기물위치검색")
     void get_piece_position() {
         Position position = Position.of(1, 7);
-        Piece pawn = chessBoard.getPiece(position);
-        Position pawnPosition = chessBoard.getPosition(pawn);
+        Piece pawn = chessBoard.searchPiece(position);
+        Position pawnPosition = chessBoard.searchPosition(pawn);
 
         assertEquals(position, pawnPosition);
     }

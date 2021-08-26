@@ -45,11 +45,4 @@ public final class ChessGameNotation {
 
         return result;
     }
-
-    @Override
-    public String toString() {
-        return "ChessGameNotation{" +
-                "playerNotationItems=" + playerNotationItems +
-                '}';
-    }
 }

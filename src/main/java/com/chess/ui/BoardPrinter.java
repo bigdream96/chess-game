@@ -16,17 +16,35 @@ public final class BoardPrinter {
     }
 
     void showChessBoard(String[][] board) {
-        System.out.println("  ---------------------------------" + (systemType == WINDOWS ? "-----" : ""));
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("  ");
+        buffer.append("---------------------------------");
+        buffer.append((systemType == WINDOWS ? "-----" : ""));
+        buffer.append("\n");
         for(int i=0; i<board.length; i++) {
-            System.out.print(8-i);
+            buffer.append(8 - i);
             for(int j=0; j<board[i].length; j++) {
-                String value = board[i][j];
-                System.out.print(" | " + getPieceChar(value));
+                buffer.append(" | ");
+                buffer.append(getPieceChar(board[i][j]));
             }
-            System.out.print(" |" + "\n");
-            System.out.println("  ---------------------------------" + (systemType == WINDOWS ? "-----" : ""));
+            buffer.append(" | ");
+            buffer.append("\n");
+            buffer.append("  ");
+            buffer.append("---------------------------------");
+            buffer.append((systemType == WINDOWS ? "-----" : ""));
+            buffer.append("\n");
         }
-        System.out.println("   　A " + getBlankChar() + " B " + getBlankChar() + " C " + getBlankChar() + " D " + getBlankChar() + " E " + getBlankChar() + " F " + getBlankChar() + " G " + getBlankChar() + " H ");
+        buffer.append("   　");
+        buffer.append("A ");
+        for(int i=66; i<=72; i++) {
+            buffer.append(" ");
+            buffer.append(getBlankChar());
+            buffer.append((char)i);
+            buffer.append(" ");
+        }
+
+        System.out.println(buffer);
     }
 
     private char getPieceChar(String value) {

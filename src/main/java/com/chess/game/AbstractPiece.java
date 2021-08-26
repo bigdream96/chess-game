@@ -32,7 +32,7 @@ abstract class AbstractPiece implements Piece {
     }
 
     final boolean validate(ChessBoard board, PlayerType playerType, Position position, Position targetPosition) {
-        Piece targetPiece = board.getPiece(targetPosition);
+        Piece targetPiece = board.searchPiece(targetPosition);
 
         if(position.equals(targetPosition) || !board.validPiecePosition(targetPosition))
             return false;

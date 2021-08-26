@@ -33,7 +33,7 @@ final class King extends AbstractPiece {
 
         if(checkCastling(board, position, targetPosition)) {
             Position rookPosition = Position.of(position.getX(), position.getY()+(yDiff > 0 ? 3 : -4));
-            Rook rook = (Rook)board.getPiece(rookPosition);
+            Rook rook = (Rook)board.searchPiece(rookPosition);
 
             board.setPiece(rook, Position.of(rookPosition.getX(), rookPosition.getY()+(yDiff > 0 ? -2 : 3)));
             board.setPiece(this, Position.of(position.getX(), position.getY()+(yDiff > 0 ? 2 : -2)));
@@ -44,7 +44,7 @@ final class King extends AbstractPiece {
         board.setPiece(this, targetPosition);
         if(isInitPosition()) initPosition = false;
 
-        return board.getPiece(targetPosition) instanceof NullPiece ? ONE_MOVE : TAKES;
+        return board.searchPiece(targetPosition) instanceof NullPiece ? ONE_MOVE : TAKES;
     }
 
     @Override
@@ -61,7 +61,7 @@ final class King extends AbstractPiece {
         && !board.rangeAttackPossible(getEnemyPlayerType(getPlayerType()), position, targetPosition)
         && abs(yDiff) == 2) {
             Position rookPosition = Position.of(position.getX(), position.getY()+(yDiff > 0 ? 3 : -4));
-            Piece p = board.getPiece(rookPosition);
+            Piece p = board.searchPiece(rookPosition);
 
             if(p.getPieceType() == ROOK) {
                 Rook rook = (Rook)p;
@@ -76,10 +76,10 @@ final class King extends AbstractPiece {
     }
 
     boolean isCheck(ChessBoard board) {
-        List<AbstractPiece> pieces = board.getPlayerPieces(getEnemyPlayerType(getPlayerType()));
+        List<AbstractPiece> pieces = board.searchPlayerPieces(getEnemyPlayerType(getPlayerType()));
 
         for(AbstractPiece piece : pieces)
-            if(piece.checkPieceRange(board, board.getPosition(piece), board.getPosition(this)))
+            if(piece.checkPieceRange(board, board.searchPosition(piece), board.searchPosition(this)))
                 return true;
 
         return false;
@@ -87,24 +87,24 @@ final class King extends AbstractPiece {
 
     boolean isCheckmate(ChessBoard board) {
         PlayerType enemyPlayerType = getEnemyPlayerType(getPlayerType());
-        Position selfPosition = board.getPosition(this);
+        Position selfPosition = board.searchPosition(this);
         Map<Position, Boolean> possiblePositions = new LinkedHashMap<>();
         Map<AbstractPiece, Boolean> attackEnemyPieces = new LinkedHashMap<>();
-        List<AbstractPiece> pieces = board.getPlayerPieces(getPlayerType());
-        List<AbstractPiece> enemyPieces = board.getPlayerPieces(enemyPlayerType);
+        List<AbstractPiece> pieces = board.searchPlayerPieces(getPlayerType());
+        List<AbstractPiece> enemyPieces = board.searchPlayerPieces(enemyPlayerType);
 
         for(int i = -1; i < 2; i++) {
             for(int j = -1; j < 2; j++) {
                 Position position = Position.of(selfPosition.getX()+i, selfPosition.getY()+j);
                 if(board.validPiecePosition(position))
-                    if(board.getPiece(position).getPlayerType() != getPlayerType())
+                    if(board.searchPiece(position).getPlayerType() != getPlayerType())
                         possiblePositions.put(position, false);
             }
         }
 
         for(AbstractPiece enemyPiece : enemyPieces) {
             for (Position possiblePosition : possiblePositions.keySet()) {
-                if (enemyPiece.validate(board, enemyPlayerType, board.getPosition(enemyPiece), possiblePosition)) {
+                if (enemyPiece.validate(board, enemyPlayerType, board.searchPosition(enemyPiece), possiblePosition)) {
                     possiblePositions.put(possiblePosition, true);
                     attackEnemyPieces.put(enemyPiece, false);
                 }
@@ -113,7 +113,7 @@ final class King extends AbstractPiece {
 
         for(AbstractPiece piece : pieces) {
             for (AbstractPiece enemyPiece : attackEnemyPieces.keySet()) {
-                if (piece.validate(board, getPlayerType(), board.getPosition(piece), board.getPosition(enemyPiece))) {
+                if (piece.validate(board, getPlayerType(), board.searchPosition(piece), board.searchPosition(enemyPiece))) {
                     attackEnemyPieces.put(enemyPiece, true);
                 }
             }

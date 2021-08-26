@@ -1,11 +1,15 @@
-import com.chess.game.HumanPlayer;
+package com.chess;
+
+import com.chess.game.Player;
+
+import static com.chess.game.PlayerType.*;
 
 class Game {
     private static final AppConfig appConfig = new AppConfig();
 
     public static void main(String[] args) {
-        HumanPlayer p1 = appConfig.whitePlayer();
-        HumanPlayer p2 = appConfig.blackPlayer();
+        Player p1 = appConfig.createPlayer(WHITE);
+        Player p2 = appConfig.createPlayer(BLACK);
 
         while(true) {
             p1.play();
